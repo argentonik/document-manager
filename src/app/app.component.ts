@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { UserService } from './core/user/user.service';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,4 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss',
   imports: [RouterOutlet],
 })
-export class AppComponent {
-  title = 'document-manager';
-}
+export class AppComponent {}

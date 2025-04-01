@@ -1,0 +1,26 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  row-gap: 32px;
+}
+
+.title {
+  margin: auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 360px;
+}
+
+.field {
+  width: 100%;
+}
+
+.sign-in-button {
+  width: 140px;
+  height: 60px;
+  margin: auto;
+}

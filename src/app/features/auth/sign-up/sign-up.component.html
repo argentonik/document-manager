@@ -1,1 +1,27 @@
-<p>sign-up works!</p>
+<h1 class="title">Create Account</h1>
+
+<form class="form" [formGroup]="signUpForm" (ngSubmit)="signUp()">
+  <mat-form-field class="field">
+    <mat-label>Full name</mat-label>
+    <input matInput formControlName="fullName">
+  </mat-form-field>
+  <mat-form-field class="field">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email">
+  </mat-form-field>
+  <mat-form-field class="field">
+    <mat-label>Password</mat-label>
+    <input matInput formControlName="password">
+  </mat-form-field>
+  <mat-form-field class="field">
+    <mat-label>Role</mat-label>
+    <mat-select formControlName="role">
+      <mat-option value="USER">User</mat-option>
+      <mat-option value="REVIEWER">Reviewer</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-flat-button class="sign-up-button" [disabled]="pending()">
+    Sign up
+  </button>
+</form>

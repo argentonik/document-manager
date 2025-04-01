@@ -1,1 +1,16 @@
-<p>sign-in works!</p>
+<h1 class="title">Sign In</h1>
+
+<form class="form" [formGroup]="signInForm" (ngSubmit)="signUp()">
+  <mat-form-field class="field">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email">
+  </mat-form-field>
+  <mat-form-field class="field">
+    <mat-label>Password</mat-label>
+    <input matInput formControlName="password">
+  </mat-form-field>
+
+  <button mat-flat-button class="sign-in-button" [disabled]="pending()">
+    Sign in
+  </button>
+</form>
