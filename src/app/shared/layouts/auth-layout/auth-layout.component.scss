@@ -1,0 +1,16 @@
+:host {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.info-block {
+  width: 40%;
+  background: lightblue;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
