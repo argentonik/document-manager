@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  background-color: #f1f1ff;
+  opacity: 0.8;
+  background-image: radial-gradient(#0909DE 0.8500000000000001px, #f1f1ff 0.8500000000000001px);
+  background-size: 17px 17px;
+
+  .card {
+    background: var(--color-primary-100);
+    padding: 80px 50px;
+    height: max-content;
+    margin-top: 20%;
+  }
+}

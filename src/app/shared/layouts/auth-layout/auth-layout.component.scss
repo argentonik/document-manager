@@ -5,13 +5,46 @@
 }
 
 .info-block {
-  width: 40%;
-  background: lightblue;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 80px;
+  width: 50%;
+  background: linear-gradient(150deg, var(--color-primary-30), var(--color-secondary-70));
+
+  h1 {
+    color: var(--color-primary-100);
+    font-weight: 600;
+    font-size: 3rem;
+    text-align: center;
+    margin-top: 30%;
+    line-height: 4rem;
+  }
+
+  .advantages {
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--color-primary-100);
+    opacity: 0.8;
+  }
 }
 
 .content {
   display: flex;
-  align-items: center;
   justify-content: center;
   flex: 1;
+  background-color: #f1f1ff;
+  opacity: 0.8;
+  background-image: radial-gradient(#0909DE 0.8500000000000001px, #f1f1ff 0.8500000000000001px);
+  background-size: 17px 17px;
+
+  .card {
+    background: var(--color-primary-100);
+    padding: 80px 50px;
+    height: max-content;
+    margin-top: 20%;
+  }
 }

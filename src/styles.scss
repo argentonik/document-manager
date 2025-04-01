@@ -1,6 +1,31 @@
 @use "styles/reset";
+@use "styles/material";
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
 
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --color-primary-0: #000000;
+  --color-primary-10: #00006e;
+  --color-primary-20: #0100ac;
+  --color-primary-30: #1418e1;
+  --color-primary-40: #3840f7;
+  --color-primary-50: #5a63ff;
+  --color-primary-60: #7c84ff;
+  --color-primary-70: #9da3ff;
+  --color-primary-80: #bfc2ff;
+  --color-primary-90: #e0e0ff;
+  --color-primary-100: #ffffff;
+
+  --color-secondary-10: #2e004e;
+  --color-secondary-20: #4b047b;
+  --color-secondary-30: #632793;
+  --color-secondary-40: #7d42ac;
+  --color-secondary-50: #975cc8;
+  --color-secondary-60: #b376e4;
+  --color-secondary-70: #ce91ff;
+  --color-secondary-80: #e0b6ff;
+  --color-secondary-90: #f2daff;
+  --color-secondary-95: #faecff;
+}
 
 html, body {
   height: 100%;
@@ -8,11 +33,11 @@ html, body {
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "Roboto Flex", sans-serif;
 }
 
 h1 {
   font-size: 2rem;
-  font-weight: 500;
-  color: #006493;
+  font-weight: 600;
+  color: var(--color-primary-40);
 }
