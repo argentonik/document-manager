@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MatCard } from '@angular/material/card';
+import { LoaderComponent } from '../../components/loader/loader.component';
+import { RouteStateService } from '../../../core/route-state/route-state.service';
 
 @Component({
   selector: 'app-main-layout',
-  imports: [RouterOutlet, MatCard],
+  imports: [RouterOutlet, LoaderComponent],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss',
 })
-export class MainLayoutComponent {}
+export class MainLayoutComponent {
+  public loading = inject(RouteStateService).loading;
+}

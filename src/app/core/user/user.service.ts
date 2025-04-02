@@ -1,7 +1,7 @@
 import { computed, inject, Injectable } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { HttpClient } from '@angular/common/http';
-import { User } from './models/user.interface';
+import { User } from '../auth/models/user.interface';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
