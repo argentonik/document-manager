@@ -4,3 +4,7 @@
   background-image: radial-gradient(#0909DE 0.8500000000000001px, #f1f1ff 0.8500000000000001px);
   background-size: 17px 17px;
 }
+
+@mixin shadow {
+  box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
+}

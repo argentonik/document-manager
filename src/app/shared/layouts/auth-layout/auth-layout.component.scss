@@ -38,7 +38,6 @@
   display: flex;
   justify-content: center;
   flex: 1;
-  @include mixins.background-dots;
 
   .card {
     background: var(--color-primary-100);

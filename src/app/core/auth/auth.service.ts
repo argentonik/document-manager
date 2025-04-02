@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { SignInReq } from './models/sign-in-req.interface';
 import { HttpClient } from '@angular/common/http';
 import { SignInRes } from './models/sign-in-res.interface';
@@ -6,6 +6,8 @@ import { CONFIG } from '../config/config.provider';
 import { SignUpReq } from './models/sign-up-req.interface';
 import { asyncScheduler, scheduled, tap } from 'rxjs';
 import { User } from './models/user.interface';
+import { Router } from '@angular/router';
+import { AppSection } from '../../shared/models/app-section.enum';
 
 const TOKEN_KEY = 'auth_token';
 
@@ -15,8 +17,10 @@ const TOKEN_KEY = 'auth_token';
 export class AuthService {
   private config = inject(CONFIG);
   private http = inject(HttpClient);
+  private router = inject(Router);
 
-  private user: User | null = null;
+  private _user = signal<User | null>(null);
+  public user = this._user.asReadonly();
 
   public isAuthenticated() {
     return !!this.getToken();
@@ -37,16 +41,19 @@ export class AuthService {
   }
 
   public getCurrentUser() {
-    if (this.user) {
-      return scheduled([this.user], asyncScheduler);
+    if (this.user()) {
+      return scheduled([this.user()!], asyncScheduler);
     } else {
-      return this.http.get<User>(`${this.config.apiUrl}/user`);
+      return this.http
+        .get<User>(`${this.config.apiUrl}/user`)
+        .pipe(tap((user) => this._user.set(user)));
     }
   }
 
   public logout() {
     localStorage.removeItem(TOKEN_KEY);
-    this.user = null;
+    this._user.set(null);
+    this.router.navigate([AppSection.AUTH]);
   }
 
   private saveToken(authResult: SignInRes) {
