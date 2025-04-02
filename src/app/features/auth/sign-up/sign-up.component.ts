@@ -11,6 +11,8 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserRole } from '../../../core/user/models/user-role.enum';
+import { AppSection } from '../../../shared/models/app-section.enum';
+import { AuthSection } from '../../../shared/models/auth-section.enum';
 
 @Component({
   selector: 'app-sign-up',
@@ -50,14 +52,14 @@ export class SignUpComponent {
   });
 
   public signUp() {
-    // if (this.signUpForm.invalid) {
-    //   return;
-    // }
+    if (this.signUpForm.invalid) {
+      return;
+    }
     this.pending.set(true);
 
     this.authService.register(this.signUpForm.value).subscribe({
       next: () => {
-        this.router.navigate(['/auth/sign-in']);
+        this.router.navigate([`/${AppSection.AUTH}/${AuthSection.SIGN_IN}`]);
       },
       error: () => {
         this.pending.set(false);

@@ -1,7 +1,7 @@
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { AppSection } from '../../../shared/models/app-sections.enum';
+import { AppSection } from '../../../shared/models/app-section.enum';
 
 export const authGuard: CanActivateFn = () => {
   const authService = inject(AuthService);

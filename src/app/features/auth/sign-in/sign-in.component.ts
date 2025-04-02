@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/auth/auth.service';
 import { MatButton } from '@angular/material/button';
+import { AppSection } from '../../../shared/models/app-section.enum';
 
 @Component({
   selector: 'app-sign-in',
@@ -41,7 +42,7 @@ export class SignInComponent {
 
     this.authService.login(this.signInForm.value).subscribe({
       next: () => {
-        this.router.navigate(['/']);
+        this.router.navigate([AppSection.MAIN]);
       },
       error: () => {
         this.pending.set(false);

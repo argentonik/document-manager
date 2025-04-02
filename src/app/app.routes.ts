@@ -5,7 +5,8 @@ import { SignInComponent } from './features/auth/sign-in/sign-in.component';
 import { MainLayoutComponent } from './shared/layouts/main-layout/main-layout.component';
 import { authGuard } from './core/auth/guards/auth.guard';
 import { guestGuard } from './core/auth/guards/guest.guard';
-import { AppSection } from './shared/models/app-sections.enum';
+import { AppSection } from './shared/models/app-section.enum';
+import { AuthSection } from './shared/models/auth-section.enum';
 
 export const routes: Routes = [
   {
@@ -14,11 +15,11 @@ export const routes: Routes = [
     canActivate: [guestGuard],
     children: [
       {
-        path: 'sign-up',
+        path: AuthSection.SIGN_UP,
         component: SignUpComponent,
       },
       {
-        path: 'sign-in',
+        path: AuthSection.SIGN_IN,
         component: SignInComponent,
       },
       {
