@@ -15,12 +15,8 @@ export class AuthService {
   private config = inject(CONFIG);
   private http = inject(HttpClient);
 
-  public get token() {
-    return this.getToken();
-  }
-
   public isAuthenticated() {
-    return this.token;
+    return !!this.getToken();
   }
 
   public login(data: Partial<SignInReq>) {
@@ -42,6 +38,6 @@ export class AuthService {
   }
 
   private getToken() {
-    localStorage.getItem(TOKEN_KEY);
+    return localStorage.getItem(TOKEN_KEY);
   }
 }

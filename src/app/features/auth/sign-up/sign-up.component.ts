@@ -50,9 +50,9 @@ export class SignUpComponent {
   });
 
   public signUp() {
-    if (this.signUpForm.invalid) {
-      return;
-    }
+    // if (this.signUpForm.invalid) {
+    //   return;
+    // }
     this.pending.set(true);
 
     this.authService.register(this.signUpForm.value).subscribe({
