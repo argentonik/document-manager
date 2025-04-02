@@ -5,8 +5,8 @@ import { SignInComponent } from './features/auth/sign-in/sign-in.component';
 import { MainLayoutComponent } from './shared/layouts/main-layout/main-layout.component';
 import { authGuard } from './core/auth/guards/auth.guard';
 import { guestGuard } from './core/auth/guards/guest.guard';
-import { AppSection } from './shared/models/app-section.enum';
-import { AuthSection } from './shared/models/auth-section.enum';
+import { AppSection } from './shared/models/enums/app-section.enum';
+import { AuthSection } from './shared/models/enums/auth-section.enum';
 import { userResolver } from './core/auth/resolvers/user.resolver';
 
 export const routes: Routes = [
@@ -45,7 +45,14 @@ export const routes: Routes = [
           ),
       },
       {
-        path: AppSection.DOCUMENT_DETAIL,
+        path: `${AppSection.DOCUMENT}/create`,
+        loadComponent: () =>
+          import('./features/document-detail/document-detail.component').then(
+            (c) => c.DocumentDetailComponent,
+          ),
+      },
+      {
+        path: `${AppSection.DOCUMENT}/edit/:id`,
         loadComponent: () =>
           import('./features/document-detail/document-detail.component').then(
             (c) => c.DocumentDetailComponent,

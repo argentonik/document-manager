@@ -11,8 +11,8 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserRole } from '../../../core/auth/models/user-role.enum';
-import { AppSection } from '../../../shared/models/app-section.enum';
-import { AuthSection } from '../../../shared/models/auth-section.enum';
+import { AppSection } from '../../../shared/models/enums/app-section.enum';
+import { AuthSection } from '../../../shared/models/enums/auth-section.enum';
 
 @Component({
   selector: 'app-sign-up',

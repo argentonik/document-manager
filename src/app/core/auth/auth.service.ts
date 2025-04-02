@@ -7,7 +7,7 @@ import { SignUpReq } from './models/sign-up-req.interface';
 import { asyncScheduler, scheduled, tap } from 'rxjs';
 import { User } from './models/user.interface';
 import { Router } from '@angular/router';
-import { AppSection } from '../../shared/models/app-section.enum';
+import { AppSection } from '../../shared/models/enums/app-section.enum';
 
 const TOKEN_KEY = 'auth_token';
 

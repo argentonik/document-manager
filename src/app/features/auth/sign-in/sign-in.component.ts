@@ -8,7 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/auth/auth.service';
 import { MatButton } from '@angular/material/button';
-import { AppSection } from '../../../shared/models/app-section.enum';
+import { AppSection } from '../../../shared/models/enums/app-section.enum';
 
 @Component({
   selector: 'app-sign-in',

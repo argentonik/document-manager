@@ -56,9 +56,8 @@
 
   .content {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex: 1;
+    padding: 24px;
 
     @include mixins.background-dots;
   }
