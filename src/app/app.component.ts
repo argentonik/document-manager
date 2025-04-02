@@ -1,11 +1,14 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { UserService } from './core/user/user.service';
+import { LoaderComponent } from './shared/components/loader/loader.component';
+import { RouteStateService } from './core/route-state/route-state.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, LoaderComponent],
 })
-export class AppComponent {}
+export class AppComponent {
+  public loading = inject(RouteStateService).loading;
+}

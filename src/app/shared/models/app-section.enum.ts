@@ -1,5 +1,6 @@
 export enum AppSection {
   MAIN = '',
   AUTH = 'auth',
-  DOCUMENT = 'document',
+  DOCUMENTS = 'documents',
+  DOCUMENT_DETAIL = 'document-detail',
 }

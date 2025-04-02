@@ -25,7 +25,7 @@ export const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: 'sign-in',
+        redirectTo: AuthSection.SIGN_IN,
       },
     ],
   },
@@ -38,8 +38,22 @@ export const routes: Routes = [
     },
     children: [
       {
+        path: AppSection.DOCUMENTS,
+        loadComponent: () =>
+          import('./features/documents/documents.component').then(
+            (c) => c.DocumentsComponent,
+          ),
+      },
+      {
+        path: AppSection.DOCUMENT_DETAIL,
+        loadComponent: () =>
+          import('./features/document-detail/document-detail.component').then(
+            (c) => c.DocumentDetailComponent,
+          ),
+      },
+      {
         path: '**',
-        redirectTo: '',
+        redirectTo: AppSection.DOCUMENTS,
       },
     ],
   },

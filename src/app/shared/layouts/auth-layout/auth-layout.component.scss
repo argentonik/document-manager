@@ -1,3 +1,5 @@
+@use "styles/mixins" as mixins;
+
 :host {
   display: flex;
   height: 100%;
@@ -36,10 +38,7 @@
   display: flex;
   justify-content: center;
   flex: 1;
-  background-color: #f1f1ff;
-  opacity: 0.8;
-  background-image: radial-gradient(#0909DE 0.8500000000000001px, #f1f1ff 0.8500000000000001px);
-  background-size: 17px 17px;
+  @include mixins.background-dots;
 
   .card {
     background: var(--color-primary-100);
