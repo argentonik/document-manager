@@ -12,7 +12,6 @@ import { AppSection } from '../../shared/models/enums/app-section.enum';
   imports: [MatCard, LoaderComponent, MatButton, MatIcon],
   templateUrl: './documents.component.html',
   styleUrl: './documents.component.scss',
-  providers: [DocumentsStore],
 })
 export class DocumentsComponent {
   private router = inject(Router);

@@ -13,11 +13,19 @@ export class DocumentsService {
   private http = inject(HttpClient);
 
   public createDocument(document: CreateDocumentReq) {
-    return this.http.post<Document>(`${this.apiUrl}/document`, document);
+    const formData = new FormData();
+
+    formData.append('name', document.name);
+    formData.append('status', document.status);
+    formData.append('file', document.file);
+
+    return this.http.post<Document>(`${this.apiUrl}/document`, formData);
   }
 
   public getDocuments() {
-    return this.http.get<List<Document>>(`${this.apiUrl}/document`);
+    return this.http.get<List<Document>>(
+      `${this.apiUrl}/document?page=1&size=10`,
+    );
   }
 
   public updateDocument(id: string, data: Partial<Document>) {

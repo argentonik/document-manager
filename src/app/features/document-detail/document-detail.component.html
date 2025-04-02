@@ -1,2 +1,24 @@
 <mat-card class="container">
+  <form [formGroup]="form" (ngSubmit)="create()" class="form">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="DRAFT">Draft</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <file-pond
+      #myPond
+      [options]="pondOptions"
+      (onaddfile)="pondHandleAddFile($event)"
+    >
+    </file-pond>
+
+    <button mat-flat-button>Create</button>
+  </form>
 </mat-card>
