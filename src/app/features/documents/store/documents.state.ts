@@ -6,7 +6,7 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { Document } from './document';
+import { Document, DocumentStatus } from './document';
 import { computed, inject } from '@angular/core';
 import { DocumentsService } from '../services/documents.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
@@ -17,11 +17,22 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationModalComponent } from '../../../shared/components/confirmation-modal/confirmation-modal.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DocumentFilters } from '../models/document-filters.interface';
 
 const initialState = {
   items: <Document[]>[],
   loading: false,
   updating: false,
+  count: 0,
+
+  filters: {
+    page: 1,
+    size: 10,
+    sort: 'updatedAt,desc',
+    status: <DocumentStatus | null>null,
+    creatorId: <string | null>null,
+    creatorEmail: <string | null>null,
+  },
 };
 
 export const DocumentsStore = signalStore(
@@ -39,13 +50,16 @@ export const DocumentsStore = signalStore(
       snackBar.open('Something went wrong', 'Close');
     };
 
-    const getDocumentsMethod = () => {
-      patchState(store, { loading: true });
+    const getDocumentsMethod = (filters: Partial<DocumentFilters> = {}) => {
+      patchState(store, {
+        loading: true,
+        filters: { ...store.filters(), ...filters },
+      });
 
-      return service.getDocuments().pipe(
+      return service.getDocuments(store.filters()).pipe(
         tapResponse({
           next: (res) => {
-            patchState(store, { items: res.results });
+            patchState(store, { items: res.results, count: res.count });
           },
           error: errorHandler,
           finalize: () => patchState(store, { loading: false }),
@@ -63,7 +77,9 @@ export const DocumentsStore = signalStore(
     };
 
     return {
-      getDocuments: rxMethod<void>(switchMap(getDocumentsMethod)),
+      getDocuments: rxMethod<Partial<DocumentFilters> | undefined>(
+        switchMap(getDocumentsMethod),
+      ),
 
       createDocument: rxMethod<CreateDocumentReq>(
         pipe(
@@ -167,7 +183,7 @@ export const DocumentsStore = signalStore(
 
   withHooks({
     onInit({ getDocuments }) {
-      getDocuments();
+      getDocuments(undefined);
     },
   }),
 );

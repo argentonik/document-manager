@@ -16,4 +16,8 @@ html {
     background-color: var(--color-primary-100),
     header-headline-weight: 600,
   ));
+
+  @include mat.card-overrides((
+    elevated-container-color: var(--color-primary-100),
+  ))
 }

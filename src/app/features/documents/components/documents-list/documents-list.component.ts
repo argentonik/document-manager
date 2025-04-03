@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { Document } from '../../store/document';
 import { MatTableModule } from '@angular/material/table';
-import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
+import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { DatePipe } from '@angular/common';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -18,7 +18,6 @@ import { IsDocumentReviewablePipe } from '../../pipes/is-document-reviewable.pip
   imports: [
     MatTableModule,
     MatCard,
-    MatCardHeader,
     MatCardContent,
     DatePipe,
     MatIconButton,
@@ -31,6 +30,7 @@ import { IsDocumentReviewablePipe } from '../../pipes/is-document-reviewable.pip
     IsDocumentRevokablePipe,
     GetStatusPipe,
     IsDocumentReviewablePipe,
+    MatCardTitle,
   ],
   templateUrl: './documents-list.component.html',
   styleUrl: './documents-list.component.scss',

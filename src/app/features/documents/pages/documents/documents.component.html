@@ -7,6 +7,11 @@
 @if (loading() && !items().length) {
   <app-loader class="loader"></app-loader>
 } @else {
+  <app-documents-filters
+    [filters]="filters()"
+    (filter)="filterDocuments($event)">
+  </app-documents-filters>
+
   <app-documents-list
     (viewDocument)="toViewDocument($event)"
     (sendDocumentToReview)="sendDocumentToReview($event)"

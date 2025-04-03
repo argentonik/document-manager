@@ -6,10 +6,18 @@ import { Router } from '@angular/router';
 import { AppSection } from '../../../../shared/models/enums/app-section.enum';
 import { DocumentsListComponent } from '../../components/documents-list/documents-list.component';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
+import { DocumentsFiltersComponent } from '../../components/documents-filters/documents-filters.component';
+import { DocumentFilters } from '../../models/document-filters.interface';
 
 @Component({
   selector: 'app-documents',
-  imports: [MatButton, MatIcon, DocumentsListComponent, LoaderComponent],
+  imports: [
+    MatButton,
+    MatIcon,
+    DocumentsListComponent,
+    LoaderComponent,
+    DocumentsFiltersComponent,
+  ],
   templateUrl: './documents.component.html',
   styleUrl: './documents.component.scss',
 })
@@ -18,6 +26,7 @@ export class DocumentsComponent {
   private store = inject(DocumentsStore);
 
   public items = this.store.items;
+  public filters = this.store.filters;
   public loading = this.store.loading;
 
   public toCreateDocument() {
@@ -26,6 +35,10 @@ export class DocumentsComponent {
 
   public toViewDocument(id: string) {
     this.router.navigate([`${AppSection.DOCUMENT}/edit/${id}`]);
+  }
+
+  public filterDocuments(filters: Partial<DocumentFilters>) {
+    this.store.getDocuments(filters);
   }
 
   public sendDocumentToReview(id: string) {
