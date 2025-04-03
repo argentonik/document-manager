@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
 import { DocumentFilters } from '../../models/document-filters.interface';
+import { GetStatusPipe } from '../../pipes/get-status.pipe';
 
 @Component({
   selector: 'app-documents-filters',
@@ -18,6 +19,7 @@ import { DocumentFilters } from '../../models/document-filters.interface';
     MatFormFieldModule,
     MatSelect,
     MatOption,
+    GetStatusPipe,
   ],
   templateUrl: './documents-filters.component.html',
   styleUrl: './documents-filters.component.scss',

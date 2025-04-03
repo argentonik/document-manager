@@ -3,25 +3,21 @@
   Add Document
 </button>
 
+<app-documents-filters
+  [filters]="filters()"
+  (filter)="filterDocuments($event)">
+</app-documents-filters>
 
-@if (loading() && !items().length) {
-  <app-loader class="loader"></app-loader>
-} @else {
-  <app-documents-filters
-    [filters]="filters()"
-    (filter)="filterDocuments($event)">
-  </app-documents-filters>
+<app-documents-list
+  [documents]="items()"
+  [count]="count()"
+  [filters]="filters()"
+  [loading]="loading()"
+  (filtersChange)="filterDocuments($event)"
+  (viewDocument)="toViewDocument($event)"
+  (sendDocumentToReview)="sendDocumentToReview($event)"
+  (revokeDocument)="revokeDocument($event)"
+  (deleteDocument)="deleteDocument($event)"
+></app-documents-list>
 
-  <app-documents-list
-    [documents]="items()"
-    [count]="count()"
-    [filters]="filters()"
-    [loading]="loading()"
-    (filtersChange)="filterDocuments($event)"
-    (viewDocument)="toViewDocument($event)"
-    (sendDocumentToReview)="sendDocumentToReview($event)"
-    (revokeDocument)="revokeDocument($event)"
-    (deleteDocument)="deleteDocument($event)"
-  ></app-documents-list>
-}
 

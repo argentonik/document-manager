@@ -5,7 +5,6 @@ import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AppSection } from '../../../../shared/models/enums/app-section.enum';
 import { DocumentsListComponent } from '../../components/documents-list/documents-list.component';
-import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { DocumentsFiltersComponent } from '../../components/documents-filters/documents-filters.component';
 import { DocumentFilters } from '../../models/document-filters.interface';
 
@@ -15,7 +14,6 @@ import { DocumentFilters } from '../../models/document-filters.interface';
     MatButton,
     MatIcon,
     DocumentsListComponent,
-    LoaderComponent,
     DocumentsFiltersComponent,
   ],
   templateUrl: './documents.component.html',

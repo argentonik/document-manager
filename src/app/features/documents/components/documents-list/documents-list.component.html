@@ -27,7 +27,7 @@
         <th mat-header-cell *matHeaderCellDef>Status</th>
         <td mat-cell *matCellDef="let doc">
           <div class="status">
-            <span>{{ doc | getStatus }}</span>
+            <span>{{ doc.status | getStatus }}</span>
             @if (doc | isDocumentRevokable) {
               <button mat-button (click)="revokeDocument.emit(doc.id)">
                 <mat-icon>stop</mat-icon>

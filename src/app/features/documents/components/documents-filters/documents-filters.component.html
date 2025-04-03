@@ -7,7 +7,7 @@
       <mat-select [(ngModel)]="status" (ngModelChange)="onStatusChange($event)">
         <mat-option [value]="-1">- No value -</mat-option>
         @for (status of statuses; track status) {
-          <mat-option [value]="status">{{ status }}</mat-option>
+          <mat-option [value]="status">{{ status | getStatus }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
