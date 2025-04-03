@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-documents-list',
@@ -18,12 +19,14 @@ import { MatSelectModule } from '@angular/material/select';
     MatIconButton,
     MatIcon,
     MatSelectModule,
+    LoaderComponent,
   ],
   templateUrl: './documents-list.component.html',
   styleUrl: './documents-list.component.scss',
 })
 export class DocumentsListComponent {
   public documents = input.required<Document[]>();
+  public loading = input<boolean>(false);
   public displayedColumns: string[] = [
     'status',
     'name',

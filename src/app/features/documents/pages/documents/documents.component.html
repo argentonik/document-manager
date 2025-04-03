@@ -4,11 +4,14 @@
 </button>
 
 
-@if (loading() && !items()) {
+@if (loading() && !items().length) {
   <app-loader class="loader"></app-loader>
+} @else {
+  <app-documents-list
+    (viewDocument)="toViewDocument($event)"
+    (deleteDocument)="deleteDocument($event)"
+    [documents]="items()"
+    [loading]="loading()"
+  ></app-documents-list>
 }
-<app-documents-list
-  (viewDocument)="toViewDocument($event)"
-  (deleteDocument)="deleteDocument($event)"
-  [documents]="items()"
-></app-documents-list>
+

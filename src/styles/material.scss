@@ -5,6 +5,10 @@
 
 html {
   @include mat.all-component-themes(theme.$light-theme);
+
+  .custom-material-backdrop {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
 }
 
 :root {

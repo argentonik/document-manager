@@ -1,15 +1,15 @@
 import { Component, inject } from '@angular/core';
 import { DocumentsStore } from '../../store/documents.state';
-import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AppSection } from '../../../../shared/models/enums/app-section.enum';
 import { DocumentsListComponent } from '../../components/documents-list/documents-list.component';
+import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-documents',
-  imports: [LoaderComponent, MatButton, MatIcon, DocumentsListComponent],
+  imports: [MatButton, MatIcon, DocumentsListComponent, LoaderComponent],
   templateUrl: './documents.component.html',
   styleUrl: './documents.component.scss',
 })
