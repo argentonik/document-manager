@@ -1,0 +1,22 @@
+:host {
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  gap: 24px;
+  padding: 48px;
+  background: var(--color-primary-100);
+  min-height: 350px;
+}
+
+.loader {
+  margin: auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 500px;
+}

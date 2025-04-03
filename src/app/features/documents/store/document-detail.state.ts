@@ -6,8 +6,8 @@ import { tapResponse } from '@ngrx/operators';
 import { DocumentDetailService } from '../services/document-detail.service';
 import { Document } from '../../../shared/models/document';
 
-const initialState = {
-  document: Document,
+const initialState: { document: Document | null; loading: boolean } = {
+  document: null,
   loading: false,
 };
 

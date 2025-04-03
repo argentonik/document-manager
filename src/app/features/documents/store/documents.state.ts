@@ -20,6 +20,8 @@ const initialState = {
 };
 
 export const DocumentsStore = signalStore(
+  { providedIn: 'root' },
+
   withState(initialState),
 
   withMethods((store) => {
@@ -50,6 +52,44 @@ export const DocumentsStore = signalStore(
             tapResponse({
               next: (item) => {
                 patchState(store, { items: [...store.items(), item] });
+              },
+              error: console.error,
+              finalize: () => patchState(store, { loading: false }),
+            }),
+          );
+        }),
+      ),
+
+      updateDocument: rxMethod<{ id: string; data: Partial<Document> }>(
+        switchMap(({ id, data }) => {
+          patchState(store, { loading: true });
+
+          return service.updateDocument(id, data).pipe(
+            tapResponse({
+              next: (item) => {
+                patchState(store, {
+                  items: store
+                    .items()
+                    .map((i) => (i.id === item.id ? item : i)),
+                });
+              },
+              error: console.error,
+              finalize: () => patchState(store, { loading: false }),
+            }),
+          );
+        }),
+      ),
+
+      deleteDocument: rxMethod<string>(
+        switchMap((id) => {
+          patchState(store, { loading: true });
+
+          return service.removeDocument(id).pipe(
+            tapResponse({
+              next: () => {
+                patchState(store, {
+                  items: store.items().filter((item) => item.id !== id),
+                });
               },
               error: console.error,
               finalize: () => patchState(store, { loading: false }),

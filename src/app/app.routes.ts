@@ -40,23 +40,23 @@ export const routes: Routes = [
       {
         path: AppSection.DOCUMENTS,
         loadComponent: () =>
-          import('./features/documents/documents.component').then(
-            (c) => c.DocumentsComponent,
-          ),
+          import(
+            './features/documents/pages/documents/documents.component'
+          ).then((c) => c.DocumentsComponent),
       },
       {
         path: `${AppSection.DOCUMENT}/create`,
         loadComponent: () =>
-          import('./features/document-detail/document-detail.component').then(
-            (c) => c.DocumentDetailComponent,
-          ),
+          import(
+            './features/documents/pages/document-create/document-create.component'
+          ).then((c) => c.DocumentCreateComponent),
       },
       {
         path: `${AppSection.DOCUMENT}/edit/:id`,
         loadComponent: () =>
-          import('./features/document-detail/document-detail.component').then(
-            (c) => c.DocumentDetailComponent,
-          ),
+          import(
+            './features/documents/pages/document-detail/document-detail.component'
+          ).then((c) => c.DocumentDetailComponent),
       },
       {
         path: '**',

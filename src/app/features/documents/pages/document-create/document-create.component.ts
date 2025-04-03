@@ -1,30 +1,31 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DocumentsStore } from '../../store/documents.state';
+import { FilePondModule } from 'ngx-filepond';
 import { MatCard } from '@angular/material/card';
-import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { MatInput } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { DocumentsStore } from '../documents/store/documents.state';
 import { MatButton } from '@angular/material/button';
-import { FilePondModule } from 'ngx-filepond';
 
 @Component({
-  selector: 'app-document-detail',
+  selector: 'app-document-create',
   imports: [
+    FilePondModule,
+    FormsModule,
     MatCard,
-    MatFormField,
-    MatLabel,
+    MatInput,
+    MatFormFieldModule,
+    ReactiveFormsModule,
     MatSelect,
     MatOption,
-    MatInput,
-    ReactiveFormsModule,
     MatButton,
-    FilePondModule,
   ],
-  templateUrl: './document-detail.component.html',
-  styleUrl: './document-detail.component.scss',
+  templateUrl: './document-create.component.html',
+  styleUrl: './document-create.component.scss',
 })
-export class DocumentDetailComponent {
+export class DocumentCreateComponent {
   private fb = inject(FormBuilder);
   private documentsStore = inject(DocumentsStore);
 
@@ -46,7 +47,6 @@ export class DocumentDetailComponent {
   }
 
   public create() {
-    console.log('form value', this.form.value);
     if (this.form.invalid) {
       return;
     }

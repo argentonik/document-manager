@@ -1,0 +1,14 @@
+<button mat-flat-button (click)="toCreateDocument()">
+  <mat-icon>add</mat-icon>
+  Add Document
+</button>
+
+
+@if (loading()) {
+  <app-loader></app-loader>
+}
+<app-documents-list
+  (viewDocument)="toViewDocument($event)"
+  (deleteDocument)="deleteDocument($event)"
+  [documents]="items()"
+></app-documents-list>
