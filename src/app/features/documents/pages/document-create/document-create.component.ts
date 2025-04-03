@@ -2,7 +2,7 @@ import { Component, effect, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DocumentsStore } from '../../store/documents.state';
 import { FilePondModule } from 'ngx-filepond';
-import { MatCard } from '@angular/material/card';
+import { MatCard, MatCardTitle } from '@angular/material/card';
 import { MatInput } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelect } from '@angular/material/select';
@@ -26,6 +26,7 @@ import { DOCUMENT_CREATION_STATUSES } from '../../store/document';
     MatOption,
     MatButton,
     BackButtonComponent,
+    MatCardTitle,
   ],
   templateUrl: './document-create.component.html',
   styleUrl: './document-create.component.scss',

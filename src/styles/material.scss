@@ -19,5 +19,9 @@ html {
 
   @include mat.card-overrides((
     elevated-container-color: var(--color-primary-100),
-  ))
+  ));
+
+  @include mat.paginator-overrides((
+    container-background-color: var(--color-primary-100),
+  ));
 }

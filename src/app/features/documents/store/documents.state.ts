@@ -1,16 +1,15 @@
 import {
   patchState,
   signalStore,
-  withComputed,
   withHooks,
   withMethods,
   withState,
 } from '@ngrx/signals';
 import { Document, DocumentStatus } from './document';
-import { computed, inject } from '@angular/core';
+import { inject } from '@angular/core';
 import { DocumentsService } from '../services/documents.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { asapScheduler, map, pipe, scheduled, switchMap } from 'rxjs';
+import { asapScheduler, map, pipe, scheduled, switchMap, tap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
 import { CreateDocumentReq } from '../models/create-document-req.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -27,7 +26,7 @@ const initialState = {
 
   filters: {
     page: 1,
-    size: 10,
+    size: 5,
     sort: 'updatedAt,desc',
     status: <DocumentStatus | null>null,
     creatorId: <string | null>null,
@@ -50,10 +49,9 @@ export const DocumentsStore = signalStore(
       snackBar.open('Something went wrong', 'Close');
     };
 
-    const getDocumentsMethod = (filters: Partial<DocumentFilters> = {}) => {
+    const getDocumentsMethod = () => {
       patchState(store, {
         loading: true,
-        filters: { ...store.filters(), ...filters },
       });
 
       return service.getDocuments(store.filters()).pipe(
@@ -77,8 +75,17 @@ export const DocumentsStore = signalStore(
     };
 
     return {
-      getDocuments: rxMethod<Partial<DocumentFilters> | undefined>(
-        switchMap(getDocumentsMethod),
+      getDocuments: rxMethod<void>(switchMap(getDocumentsMethod)),
+
+      filterDocuments: rxMethod<Partial<DocumentFilters>>(
+        pipe(
+          tap((filters) =>
+            patchState(store, { filters: { ...store.filters(), ...filters } }),
+          ),
+          switchMap((filters) => {
+            return getDocumentsMethod();
+          }),
+        ),
       ),
 
       createDocument: rxMethod<CreateDocumentReq>(
@@ -176,14 +183,15 @@ export const DocumentsStore = signalStore(
       ),
     };
   }),
-
-  withComputed(({ items }) => ({
-    count: computed(() => items.length),
-  })),
+  //
+  // withComputed(({ filters }) => ({
+  //   page: computed(() => filters.page),
+  //   pageSize: computed(() => filters.size),
+  // })),
 
   withHooks({
     onInit({ getDocuments }) {
-      getDocuments(undefined);
+      getDocuments();
     },
   }),
 );

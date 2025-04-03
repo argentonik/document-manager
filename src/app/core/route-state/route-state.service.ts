@@ -29,7 +29,6 @@ export class RouteStateService {
   checkRouterEvent(routerEvent: RouterEvent): void {
     if (routerEvent instanceof NavigationStart) {
       this.loading.set(true);
-      console.log('loading true');
     }
 
     if (
@@ -38,7 +37,6 @@ export class RouteStateService {
       routerEvent instanceof NavigationError
     ) {
       this.loading.set(false);
-      console.log('loading false');
     }
   }
 }

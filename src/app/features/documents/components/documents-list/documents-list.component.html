@@ -7,6 +7,12 @@
 
   <mat-card-content class="content" [class.loading]="loading()">
     <table mat-table [dataSource]="documents()" class="mat-elevation-z8">
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell no-data" [attr.colspan]="displayedColumns.length">
+          No data.
+        </td>
+      </tr>
+
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Name</th>
         <td mat-cell *matCellDef="let doc"> {{ doc.name }}</td>
@@ -63,5 +69,13 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+
+    <mat-paginator
+      [length]="count()"
+      [pageIndex]="(filters()?.page ?? 1) - 1"
+      [pageSize]="filters()?.size ?? 10"
+      [pageSizeOptions]="[5, 10, 25]"
+      (page)="onPaginate($event)">
+    </mat-paginator>
   </mat-card-content>
 </mat-card>

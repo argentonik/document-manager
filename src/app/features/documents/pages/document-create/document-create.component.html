@@ -1,6 +1,8 @@
 <app-back-button (click)="toDocumentsList()"></app-back-button>
 
 <mat-card class="container">
+  <mat-card-title>Document creation</mat-card-title>
+
   <form [formGroup]="form" (ngSubmit)="create()" class="form">
     <mat-form-field>
       <mat-label>Name</mat-label>

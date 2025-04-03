@@ -36,9 +36,9 @@ export class DocumentsFiltersComponent implements OnChanges {
 
   public onStatusChange(status: DocumentStatus | -1) {
     if (status === -1) {
-      this.filter.emit({ status: undefined });
+      this.filter.emit({ status: undefined, page: 1 });
     } else {
-      this.filter.emit({ status });
+      this.filter.emit({ status, page: 1 });
     }
   }
 }

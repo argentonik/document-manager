@@ -26,6 +26,7 @@ export class DocumentsComponent {
   private store = inject(DocumentsStore);
 
   public items = this.store.items;
+  public count = this.store.count;
   public filters = this.store.filters;
   public loading = this.store.loading;
 
@@ -37,8 +38,8 @@ export class DocumentsComponent {
     this.router.navigate([`${AppSection.DOCUMENT}/edit/${id}`]);
   }
 
-  public filterDocuments(filters: Partial<DocumentFilters>) {
-    this.store.getDocuments(filters);
+  public filterDocuments(filters: Partial<DocumentFilters> | undefined) {
+    this.store.filterDocuments(filters ?? {});
   }
 
   public sendDocumentToReview(id: string) {

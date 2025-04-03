@@ -1,5 +1,5 @@
 import { Component, effect, inject, input, OnInit } from '@angular/core';
-import { MatCard } from '@angular/material/card';
+import { MatCard, MatCardTitle } from '@angular/material/card';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { DocumentsStore } from '../../store/documents.state';
@@ -23,6 +23,7 @@ import { BackButtonComponent } from '../../../../shared/components/back-button/b
     FilePondModule,
     LoaderComponent,
     BackButtonComponent,
+    MatCardTitle,
   ],
   providers: [DocumentStore],
   templateUrl: './document-detail.component.html',
