@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DocumentsStore } from '../../store/documents.state';
 import { FilePondModule } from 'ngx-filepond';
@@ -11,6 +11,7 @@ import { MatButton } from '@angular/material/button';
 import { BackButtonComponent } from '../../../../shared/components/back-button/back-button.component';
 import { AppSection } from '../../../../shared/models/enums/app-section.enum';
 import { Router } from '@angular/router';
+import { DOCUMENT_CREATION_STATUSES } from '../../store/document';
 
 @Component({
   selector: 'app-document-create',
@@ -34,6 +35,7 @@ export class DocumentCreateComponent {
   private router = inject(Router);
   private documentsStore = inject(DocumentsStore);
 
+  public statuses = DOCUMENT_CREATION_STATUSES;
   public form = this.fb.group({
     name: [''],
     status: [''],
@@ -46,6 +48,14 @@ export class DocumentCreateComponent {
     labelIdle: 'Drop files here',
     acceptedFileTypes: 'application/pdf',
   };
+
+  constructor() {
+    effect(() => {
+      if (this.documentsStore.updating()) {
+        this.toDocumentsList();
+      }
+    });
+  }
 
   public pondHandleAddFile(event: { file: { file: File } }) {
     this.form.patchValue({ file: event.file.file });

@@ -28,6 +28,14 @@ export class DocumentsComponent {
     this.router.navigate([`${AppSection.DOCUMENT}/edit/${id}`]);
   }
 
+  public sendDocumentToReview(id: string) {
+    this.store.sendDocumentOnReview(id);
+  }
+
+  public revokeDocument(id: string) {
+    this.store.revokeDocument(id);
+  }
+
   public deleteDocument(id: string) {
     return this.store.deleteDocument(id);
   }

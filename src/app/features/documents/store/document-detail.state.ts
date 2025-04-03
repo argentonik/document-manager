@@ -4,7 +4,7 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { switchMap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
 import { DocumentDetailService } from '../services/document-detail.service';
-import { Document } from '../../../shared/models/document';
+import { Document } from './document';
 
 const initialState: { document: Document | null; loading: boolean } = {
   document: null,

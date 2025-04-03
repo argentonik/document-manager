@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { CONFIG } from '../../../core/config/config.provider';
 import { HttpClient } from '@angular/common/http';
 import { CreateDocumentReq } from '../models/create-document-req.interface';
-import { Document, DocumentStatus } from '../../../shared/models/document';
+import { Document, DocumentStatus } from '../store/document';
 import { List } from '../models/list.interface';
 
 @Injectable({

@@ -9,6 +9,8 @@
 } @else {
   <app-documents-list
     (viewDocument)="toViewDocument($event)"
+    (sendDocumentToReview)="sendDocumentToReview($event)"
+    (revokeDocument)="revokeDocument($event)"
     (deleteDocument)="deleteDocument($event)"
     [documents]="items()"
     [loading]="loading()"

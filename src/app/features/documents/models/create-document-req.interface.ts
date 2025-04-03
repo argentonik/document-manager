@@ -1,4 +1,4 @@
-import { DocumentStatus } from '../../../shared/models/document';
+import { DocumentStatus } from '../store/document';
 
 export interface CreateDocumentReq {
   status: DocumentStatus;

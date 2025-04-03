@@ -10,7 +10,9 @@
     <mat-form-field>
       <mat-label>Status</mat-label>
       <mat-select formControlName="status">
-        <mat-option value="DRAFT">Draft</mat-option>
+        @for (status of statuses; track status) {
+          <mat-option [value]="status">{{ status }}</mat-option>
+        }
       </mat-select>
     </mat-form-field>
 

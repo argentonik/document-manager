@@ -6,11 +6,11 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { Document } from '../../../shared/models/document';
+import { Document } from './document';
 import { computed, inject } from '@angular/core';
 import { DocumentsService } from '../services/documents.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { asapScheduler, map, scheduled, switchMap } from 'rxjs';
+import { asapScheduler, map, pipe, scheduled, switchMap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
 import { CreateDocumentReq } from '../models/create-document-req.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -41,6 +41,7 @@ export const DocumentsStore = signalStore(
 
     const getDocumentsMethod = () => {
       patchState(store, { loading: true });
+
       return service.getDocuments().pipe(
         tapResponse({
           next: (res) => {
@@ -52,78 +53,110 @@ export const DocumentsStore = signalStore(
       );
     };
 
+    const fileRemoveConfirmation = (id: string) => {
+      const fileName = store.items().find((item) => item.id === id)?.name;
+      return dialog
+        .open(ConfirmationModalComponent, {
+          data: fileName,
+        })
+        .afterClosed();
+    };
+
     return {
       getDocuments: rxMethod<void>(switchMap(getDocumentsMethod)),
 
       createDocument: rxMethod<CreateDocumentReq>(
-        switchMap((data) => {
-          patchState(store, { updating: true });
-
-          return service.createDocument(data).pipe(
-            tapResponse({
-              next: () => {
-                patchState(store, { updating: false });
-                snackBar.open(
-                  `Document ${data.name} has been created`,
-                  'Close',
-                );
-              },
-              error: errorHandler,
-            }),
-            switchMap(() => getDocumentsMethod()),
-          );
-        }),
+        pipe(
+          switchMap((data) => {
+            patchState(store, { updating: true });
+            return service.createDocument(data);
+          }),
+          tapResponse({
+            next: () => {
+              patchState(store, { updating: false });
+              snackBar.open('Document has been created', 'Close');
+            },
+            error: errorHandler,
+          }),
+          switchMap(() => getDocumentsMethod()),
+        ),
       ),
 
       updateDocument: rxMethod<{ id: string; data: Partial<Document> }>(
-        switchMap(({ id, data }) => {
-          patchState(store, { updating: true });
+        pipe(
+          switchMap(({ id, data }) => {
+            patchState(store, { updating: true });
+            return service.updateDocument(id, data);
+          }),
+          tapResponse({
+            next: () => {
+              patchState(store, { updating: false });
+              snackBar.open(`Document has been updated`, 'Close');
+            },
+            error: errorHandler,
+          }),
+          switchMap(() => getDocumentsMethod()),
+        ),
+      ),
 
-          return service.updateDocument(id, data).pipe(
-            tapResponse({
-              next: () => {
-                patchState(store, { updating: false });
-                snackBar.open(
-                  `Document ${data.name} has been updated`,
-                  'Close',
-                );
-              },
-              error: errorHandler,
-            }),
-            switchMap(() => getDocumentsMethod()),
-          );
-        }),
+      sendDocumentOnReview: rxMethod<string>(
+        pipe(
+          switchMap((id) => {
+            patchState(store, { updating: true });
+            return service.sendToReview(id);
+          }),
+          tapResponse({
+            next: () => {
+              patchState(store, { updating: false });
+              snackBar.open(`Document has been sent to review`, 'Close');
+            },
+            error: errorHandler,
+          }),
+          switchMap(() => getDocumentsMethod()),
+        ),
+      ),
+
+      revokeDocument: rxMethod<string>(
+        pipe(
+          switchMap((id) => {
+            patchState(store, { updating: true });
+            return service.revokeReview(id);
+          }),
+          tapResponse({
+            next: () => {
+              patchState(store, { updating: false });
+              snackBar.open(`Document has been revoked`, 'Close');
+            },
+            error: errorHandler,
+          }),
+          switchMap(() => getDocumentsMethod()),
+        ),
       ),
 
       deleteDocument: rxMethod<string>(
-        switchMap((id) => {
-          const fileName = store.items().find((item) => item.id === id)?.name;
-          return dialog
-            .open(ConfirmationModalComponent, {
-              data: fileName,
-            })
-            .afterClosed()
-            .pipe(
+        pipe(
+          switchMap((id) => {
+            return fileRemoveConfirmation(id).pipe(
               map((confirmation) => (confirmation ? id : null)),
-              switchMap((id) => {
-                if (!id) {
-                  return scheduled([undefined], asapScheduler);
-                }
-                patchState(store, { loading: true });
-
-                return service.removeDocument(id).pipe(
-                  tapResponse({
-                    next: () => {
-                      patchState(store, { updating: false });
-                      snackBar.open(`Document has been deleted`, 'Close');
-                    },
-                    error: errorHandler,
-                  }),
-                  switchMap(() => getDocumentsMethod()),
-                );
-              }),
             );
-        }),
+          }),
+          switchMap((id) => {
+            if (!id) {
+              return scheduled([undefined], asapScheduler);
+            }
+            patchState(store, { loading: true });
+            return service.removeDocument(id).pipe(
+              tapResponse({
+                next: () => {
+                  patchState(store, { updating: false });
+                  snackBar.open(`Document has been deleted`, 'Close');
+                },
+                error: errorHandler,
+              }),
+              switchMap(() => getDocumentsMethod()),
+            );
+          }),
+        ),
       ),
     };
   }),

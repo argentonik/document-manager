@@ -21,3 +21,10 @@
   scale: 0.7;
   z-index: 1;
 }
+
+.status {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  column-gap: 8px;
+}
