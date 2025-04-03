@@ -1,5 +1,5 @@
 import { Component, effect, inject, input, OnInit } from '@angular/core';
-import { MatCard, MatCardActions } from '@angular/material/card';
+import { MatCard } from '@angular/material/card';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { DocumentsStore } from '../../store/documents.state';
@@ -9,6 +9,7 @@ import { DocumentStore } from '../../store/document-detail.state';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { Router } from '@angular/router';
 import { AppSection } from '../../../../shared/models/enums/app-section.enum';
+import { BackButtonComponent } from '../../../../shared/components/back-button/back-button.component';
 
 @Component({
   selector: 'app-document-detail',
@@ -21,7 +22,7 @@ import { AppSection } from '../../../../shared/models/enums/app-section.enum';
     MatButton,
     FilePondModule,
     LoaderComponent,
-    MatCardActions,
+    BackButtonComponent,
   ],
   providers: [DocumentStore],
   templateUrl: './document-detail.component.html',
@@ -44,6 +45,12 @@ export class DocumentDetailComponent implements OnInit {
   constructor() {
     effect(() => {
       this.form.patchValue({ name: this.document()?.name });
+    });
+
+    effect(() => {
+      if (this.documentsStore.updating()) {
+        this.toDocumentsList();
+      }
     });
   }
 

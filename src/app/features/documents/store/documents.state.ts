@@ -17,6 +17,7 @@ import { CreateDocumentReq } from '../models/create-document-req.interface';
 const initialState = {
   items: <Document[]>[],
   loading: false,
+  updating: false,
 };
 
 export const DocumentsStore = signalStore(
@@ -62,19 +63,22 @@ export const DocumentsStore = signalStore(
 
       updateDocument: rxMethod<{ id: string; data: Partial<Document> }>(
         switchMap(({ id, data }) => {
-          patchState(store, { loading: true });
+          patchState(store, { updating: true, loading: true });
 
           return service.updateDocument(id, data).pipe(
             tapResponse({
-              next: (item) => {
+              next: () => {
+                const items = store.items() ?? [];
+                const updatedItems = items.map((item) =>
+                  item.id === id ? { ...item, name: data.name! } : item,
+                );
                 patchState(store, {
-                  items: store
-                    .items()
-                    .map((i) => (i.id === item.id ? item : i)),
+                  items: updatedItems,
                 });
               },
               error: console.error,
-              finalize: () => patchState(store, { loading: false }),
+              finalize: () =>
+                patchState(store, { updating: false, loading: false }),
             }),
           );
         }),

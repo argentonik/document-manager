@@ -1,3 +1,5 @@
+<app-back-button (click)="toDocumentsList()"></app-back-button>
+
 <mat-card class="container">
   <h1>Document view</h1>
   @if (loading()) {
@@ -13,11 +15,8 @@
       <div>
         Status: {{ document.status }}
       </div>
-    </form>
 
-    <mat-card-actions>
-      <button mat-button (click)="toDocumentsList()">Back</button>
       <button mat-flat-button>Save</button>
-    </mat-card-actions>
+    </form>
   }
 </mat-card>

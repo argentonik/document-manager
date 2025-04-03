@@ -8,6 +8,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
 import { MatButton } from '@angular/material/button';
+import { BackButtonComponent } from '../../../../shared/components/back-button/back-button.component';
+import { AppSection } from '../../../../shared/models/enums/app-section.enum';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-document-create',
@@ -21,12 +24,14 @@ import { MatButton } from '@angular/material/button';
     MatSelect,
     MatOption,
     MatButton,
+    BackButtonComponent,
   ],
   templateUrl: './document-create.component.html',
   styleUrl: './document-create.component.scss',
 })
 export class DocumentCreateComponent {
   private fb = inject(FormBuilder);
+  private router = inject(Router);
   private documentsStore = inject(DocumentsStore);
 
   public form = this.fb.group({
@@ -56,5 +61,9 @@ export class DocumentCreateComponent {
       status: formValue.status,
       file: formValue.file,
     });
+  }
+
+  public toDocumentsList() {
+    this.router.navigate([AppSection.DOCUMENTS]);
   }
 }

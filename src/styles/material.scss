@@ -6,3 +6,10 @@
 html {
   @include mat.all-component-themes(theme.$light-theme);
 }
+
+:root {
+  @include mat.table-overrides((
+    background-color: var(--color-primary-100),
+    header-headline-weight: 600,
+  ));
+}
