@@ -16,6 +16,7 @@ import { CreateDocumentReq } from '../models/create-document-req.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationModalComponent } from '../../../shared/components/confirmation-modal/confirmation-modal.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 const initialState = {
   items: <Document[]>[],
@@ -33,72 +34,63 @@ export const DocumentsStore = signalStore(
     const dialog = inject(MatDialog);
     const snackBar = inject(MatSnackBar);
 
-    return {
-      getDocuments: rxMethod<void>(
-        switchMap(() => {
-          patchState(store, { loading: true });
+    const errorHandler = (error: HttpErrorResponse) => {
+      console.error(error);
+      snackBar.open('Something went wrong', 'Close');
+    };
 
-          return service.getDocuments().pipe(
-            tapResponse({
-              next: (res) => {
-                patchState(store, { items: res.results });
-              },
-              error: (error) => {
-                console.error(error);
-                snackBar.open('Something went wrong', 'Close');
-              },
-              finalize: () => patchState(store, { loading: false }),
-            }),
-          );
+    const getDocumentsMethod = () => {
+      patchState(store, { loading: true });
+      return service.getDocuments().pipe(
+        tapResponse({
+          next: (res) => {
+            patchState(store, { items: res.results });
+          },
+          error: errorHandler,
+          finalize: () => patchState(store, { loading: false }),
         }),
-      ),
+      );
+    };
+
+    return {
+      getDocuments: rxMethod<void>(switchMap(getDocumentsMethod)),
 
       createDocument: rxMethod<CreateDocumentReq>(
         switchMap((data) => {
-          patchState(store, { loading: true });
+          patchState(store, { updating: true });
 
           return service.createDocument(data).pipe(
             tapResponse({
-              next: (item) => {
-                patchState(store, { items: [...store.items(), item] });
+              next: () => {
+                patchState(store, { updating: false });
+                snackBar.open(
+                  `Document ${data.name} has been created`,
+                  'Close',
+                );
               },
-              error: (error) => {
-                console.error(error);
-                snackBar.open('Something went wrong', 'Close');
-              },
-              finalize: () => {
-                patchState(store, { loading: false });
-                snackBar.open('Document has been created', 'Close');
-              },
+              error: errorHandler,
             }),
+            switchMap(() => getDocumentsMethod()),
           );
         }),
       ),
 
       updateDocument: rxMethod<{ id: string; data: Partial<Document> }>(
         switchMap(({ id, data }) => {
-          patchState(store, { updating: true, loading: true });
+          patchState(store, { updating: true });
 
           return service.updateDocument(id, data).pipe(
             tapResponse({
               next: () => {
-                const items = store.items() ?? [];
-                const updatedItems = items.map((item) =>
-                  item.id === id ? { ...item, name: data.name! } : item,
+                patchState(store, { updating: false });
+                snackBar.open(
+                  `Document ${data.name} has been updated`,
+                  'Close',
                 );
-                patchState(store, {
-                  items: updatedItems,
-                });
               },
-              error: (error) => {
-                console.error(error);
-                snackBar.open('Something went wrong', 'Close');
-              },
-              finalize: () => {
-                patchState(store, { updating: false, loading: false });
-                snackBar.open('Document has been updated', 'Close');
-              },
+              error: errorHandler,
             }),
+            switchMap(() => getDocumentsMethod()),
           );
         }),
       ),
@@ -122,19 +114,12 @@ export const DocumentsStore = signalStore(
                 return service.removeDocument(id).pipe(
                   tapResponse({
                     next: () => {
-                      patchState(store, {
-                        items: store.items().filter((item) => item.id !== id),
-                      });
+                      patchState(store, { updating: false });
+                      snackBar.open(`Document has been deleted`, 'Close');
                     },
-                    error: (error) => {
-                      console.error(error);
-                      snackBar.open('Something went wrong', 'Close');
-                    },
-                    finalize: () => {
-                      patchState(store, { loading: false });
-                      snackBar.open('Document has been deleted', 'Close');
-                    },
+                    error: errorHandler,
                   }),
+                  switchMap(() => getDocumentsMethod()),
                 );
               }),
             );
