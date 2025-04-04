@@ -23,6 +23,7 @@
     "@ngrx/signals": "^19.1.0",
     "@nutrient-sdk/viewer": "^1.1.0",
     "filepond": "^4.32.7",
+    "filepond-plugin-file-validate-type": "^1.2.9",
     "ngx-filepond": "^7.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

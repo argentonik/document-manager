@@ -1,17 +1,24 @@
 import { Component, effect, inject } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { DocumentsStore } from '../../store/documents.state';
-import { FilePondModule } from 'ngx-filepond';
-import { MatCard, MatCardTitle } from '@angular/material/card';
+import { FilePondModule, registerPlugin } from 'ngx-filepond';
+import { MatCard, MatCardActions, MatCardTitle } from '@angular/material/card';
 import { MatInput } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/core';
 import { MatButton } from '@angular/material/button';
 import { BackButtonComponent } from '../../../../shared/components/back-button/back-button.component';
 import { AppSection } from '../../../../shared/models/enums/app-section.enum';
 import { Router } from '@angular/router';
-import { DOCUMENT_CREATION_STATUSES } from '../../store/document';
+import { DocumentStatus } from '../../store/document';
+import { MatIcon } from '@angular/material/icon';
+
+// import and register filepond file type validation plugin
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 
 @Component({
   selector: 'app-document-create',
@@ -22,11 +29,11 @@ import { DOCUMENT_CREATION_STATUSES } from '../../store/document';
     MatInput,
     MatFormFieldModule,
     ReactiveFormsModule,
-    MatSelect,
-    MatOption,
     MatButton,
     BackButtonComponent,
     MatCardTitle,
+    MatCardActions,
+    MatIcon,
   ],
   templateUrl: './document-create.component.html',
   styleUrl: './document-create.component.scss',
@@ -35,22 +42,25 @@ export class DocumentCreateComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private documentsStore = inject(DocumentsStore);
+  private acceptedFileTypes = ['application/pdf'];
 
-  public statuses = DOCUMENT_CREATION_STATUSES;
   public form = this.fb.group({
-    name: [''],
-    status: [''],
-    file: [<File | undefined>undefined],
+    name: [
+      '',
+      [Validators.required, Validators.minLength(1), Validators.maxLength(64)],
+    ],
+    file: [<File | undefined>undefined, [Validators.required]],
   });
 
   public pondOptions = {
-    class: 'my-filepond',
     multiple: false,
-    labelIdle: 'Drop files here',
-    acceptedFileTypes: 'application/pdf',
+    labelIdle: 'Drop file here',
+    acceptedFileTypes: this.acceptedFileTypes,
   };
 
   constructor() {
+    registerPlugin(FilePondPluginFileValidateType);
+
     effect(() => {
       if (this.documentsStore.updating()) {
         this.toDocumentsList();
@@ -59,17 +69,25 @@ export class DocumentCreateComponent {
   }
 
   public pondHandleAddFile(event: { file: { file: File } }) {
+    if (!this.acceptedFileTypes.includes(event.file.file.type)) {
+      return;
+    }
     this.form.patchValue({ file: event.file.file });
   }
 
-  public create() {
+  public pondHandleRemoveFile() {
+    this.form.patchValue({ file: undefined });
+  }
+
+  public create(send: boolean) {
     if (this.form.invalid) {
+      this.form.markAllAsTouched();
       return;
     }
     const formValue = this.form.value as any;
     this.documentsStore.createDocument({
       name: formValue.name,
-      status: formValue.status,
+      status: send ? DocumentStatus.READY_FOR_REVIEW : DocumentStatus.DRAFT,
       file: formValue.file,
     });
   }

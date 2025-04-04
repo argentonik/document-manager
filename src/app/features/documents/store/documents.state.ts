@@ -46,6 +46,7 @@ export const DocumentsStore = signalStore(
 
     const errorHandler = (error: HttpErrorResponse) => {
       console.error(error);
+      patchState(store, { updating: false, loading: false });
       snackBar.open('Something went wrong', 'Close');
     };
 

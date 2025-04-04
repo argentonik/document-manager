@@ -1,15 +1,7 @@
 :host {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  width: 100%;
-}
-
-.container {
-  display: flex;
   gap: 24px;
-  padding: 24px;
-  background: var(--color-primary-100);
 }
 
 .form {
@@ -17,4 +9,14 @@
   flex-direction: column;
   gap: 16px;
   width: 500px;
+
+  .error {
+    padding: 0 16px;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 16px;
+  margin-left: auto;
 }

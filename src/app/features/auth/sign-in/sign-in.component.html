@@ -4,13 +4,41 @@
   <mat-form-field class="field">
     <mat-label>Email</mat-label>
     <input matInput formControlName="email">
+
+    @if (signInForm.controls.email.errors?.['required']) {
+      <mat-error>Email is required</mat-error>
+    }
+    @if (signInForm.controls.email.dirty && signInForm.controls.email.errors?.['email']) {
+      <mat-error>Invalid email</mat-error>
+    }
+    @if (signInForm.controls.email.errors?.['maxlength']) {
+      <mat-error>Email must be at most {{ signInForm.controls.email.errors?.['maxlength'].requiredLength }} characters
+        long
+      </mat-error>
+    }
   </mat-form-field>
   <mat-form-field class="field">
     <mat-label>Password</mat-label>
-    <input matInput formControlName="password">
+    <input matInput formControlName="password" type="password">
+
+    @if (signInForm.controls.password.errors?.['required']) {
+      <mat-error>Password is required</mat-error>
+    }
+    @if (signInForm.controls.password.errors?.['minlength']) {
+      <mat-error>Password must be at least {{ signInForm.controls.password.errors?.['minlength'].requiredLength }}
+        characters long
+      </mat-error>
+    }
+    @if (signInForm.controls.password.errors?.['maxlength']) {
+      <mat-error>Password must be at most {{ signInForm.controls.password.errors?.['maxlength'].requiredLength }}
+        characters long
+      </mat-error>
+    }
   </mat-form-field>
 
   <button mat-flat-button class="sign-in-button" [disabled]="pending()">
     Sign in
   </button>
+
+  <p class="link-container">Don't have account yet? <a routerLink="/auth/sign-up" class="link">Sign up</a></p>
 </form>

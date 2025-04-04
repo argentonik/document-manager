@@ -1,5 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
-import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import {
+  MatError,
+  MatFormField,
+  MatInput,
+  MatLabel,
+} from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
 import { MatButton } from '@angular/material/button';
@@ -9,7 +14,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { UserRole } from '../../../core/auth/models/user-role.enum';
 import { AppSection } from '../../../shared/models/enums/app-section.enum';
 import { AuthSection } from '../../../shared/models/enums/auth-section.enum';
@@ -24,6 +29,8 @@ import { AuthSection } from '../../../shared/models/enums/auth-section.enum';
     MatSelect,
     MatButton,
     ReactiveFormsModule,
+    RouterLink,
+    MatError,
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',

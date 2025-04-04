@@ -4,15 +4,58 @@
   <mat-form-field class="field">
     <mat-label>Full name</mat-label>
     <input matInput formControlName="fullName">
+
+    @if (signUpForm.controls.fullName.errors?.['required']) {
+      <mat-error>Full name is required</mat-error>
+    }
+    @if (signUpForm.controls.fullName.errors?.['minlength']) {
+      <mat-error>Full name must be at least {{ signUpForm.controls.fullName.errors?.['minlength'].requiredLength }}
+        characters long
+      </mat-error>
+    }
+    @if (signUpForm.controls.fullName.errors?.['maxlength']) {
+      <mat-error>Full name must be at most {{ signUpForm.controls.fullName.errors?.['maxlength'].requiredLength }}
+        characters long
+      </mat-error>
+    }
   </mat-form-field>
+
   <mat-form-field class="field">
     <mat-label>Email</mat-label>
     <input matInput formControlName="email">
+
+    @if (signUpForm.controls.email.errors?.['required']) {
+      <mat-error>Email is required</mat-error>
+    }
+    @if (signUpForm.controls.email.dirty && signUpForm.controls.email.errors?.['email']) {
+      <mat-error>Invalid email</mat-error>
+    }
+    @if (signUpForm.controls.email.errors?.['maxlength']) {
+      <mat-error>Email must be at most {{ signUpForm.controls.email.errors?.['maxlength'].requiredLength }} characters
+        long
+      </mat-error>
+    }
   </mat-form-field>
+
   <mat-form-field class="field">
     <mat-label>Password</mat-label>
-    <input matInput formControlName="password">
+    <input matInput formControlName="password" type="password">
+
+    @if (signUpForm.controls.password.errors?.['required']) {
+      <mat-error>Password is required</mat-error>
+    }
+    @if (signUpForm.controls.password.dirty && signUpForm.controls.password.errors?.['minlength']) {
+      <mat-error>Password must be at least {{ signUpForm.controls.password.errors?.['minlength'].requiredLength }}
+        characters long
+      </mat-error>
+    }
+    @if (signUpForm.controls.password.errors?.['maxlength']) {
+      <mat-error>Password must be at most {{ signUpForm.controls.password.errors?.['maxlength'].requiredLength }}
+        characters long
+      </mat-error>
+    }
   </mat-form-field>
+
   <mat-form-field class="field">
     <mat-label>Role</mat-label>
     <mat-select formControlName="role">
@@ -24,4 +67,6 @@
   <button mat-flat-button class="sign-up-button" [disabled]="pending()">
     Sign up
   </button>
+
+  <p class="link-container">Already have an account? <a routerLink="/auth/sign-in" class="link">Sign in</a></p>
 </form>

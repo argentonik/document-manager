@@ -26,6 +26,17 @@
   --color-secondary-80: #e0b6ff;
   --color-secondary-90: #f2daff;
   --color-secondary-95: #faecff;
+
+  --color-gray-100: #FAFAFA;
+  --color-gray-90: #F5F5F5;
+  --color-gray-80: #EEEEEE;
+  --color-gray-70: #E0E0E0;
+  --color-gray-60: #BDBDBD;
+  --color-gray-50: #9E9E9E;
+  --color-gray-40: #757575;
+  --color-gray-30: #616161;
+  --color-gray-20: #424242;
+  --color-gray-10: #212121;
 }
 
 html, body {
@@ -35,6 +46,7 @@ html, body {
 body {
   margin: 0;
   font-family: "Roboto Flex", sans-serif;
+  font-size: 14px;
 }
 
 h1 {
@@ -43,12 +55,33 @@ h1 {
   color: var(--color-primary-20);
 }
 
+a {
+  color: var(--color-secondary-30);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--color-secondary-40);
+  }
+}
+
+.smr {
+  font-size: 12px;
+  font-weight: 500;
+}
+
 .smb {
   font-size: 12px;
   font-weight: 600;
 }
 
 .lb {
-  font-size: 1.5rem;
+  font-size: 20px;
   font-weight: 600;
+}
+
+.card {
+  display: flex;
+  gap: 24px;
+  padding: 16px 24px;
+  background: var(--color-primary-100);
 }

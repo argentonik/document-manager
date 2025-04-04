@@ -5,7 +5,9 @@
 }
 
 .title {
-  margin: auto;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .form {
@@ -17,6 +19,11 @@
 
 .field {
   width: 100%;
+}
+
+.link-container {
+  color: var(--color-gray-40);
+  margin: 8px auto 0;
 }
 
 .sign-in-button {

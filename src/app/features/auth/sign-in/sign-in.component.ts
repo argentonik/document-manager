@@ -1,18 +1,31 @@
 import { Component, inject, signal } from '@angular/core';
-import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import {
+  MatError,
+  MatFormField,
+  MatInput,
+  MatLabel,
+} from '@angular/material/input';
 import {
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/auth/auth.service';
 import { MatButton } from '@angular/material/button';
 import { AppSection } from '../../../shared/models/enums/app-section.enum';
 
 @Component({
   selector: 'app-sign-in',
-  imports: [MatButton, MatFormField, MatInput, MatLabel, ReactiveFormsModule],
+  imports: [
+    MatButton,
+    MatFormField,
+    MatInput,
+    MatLabel,
+    ReactiveFormsModule,
+    MatError,
+    RouterLink,
+  ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
 })
