@@ -1,7 +1,7 @@
 <mat-card class="card">
   <mat-card-title>Filters</mat-card-title>
 
-  <mat-card-content>
+  <mat-card-content class="fields">
     <mat-form-field>
       <mat-label>Status</mat-label>
       <mat-select [(ngModel)]="status" (ngModelChange)="onStatusChange($event)">
@@ -10,6 +10,38 @@
           <mat-option [value]="status">{{ status | getStatus }}</mat-option>
         }
       </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *isGranted="UserRoles.REVIEWER">
+      <mat-label>Creator e-mail</mat-label>
+      <input matInput [formControl]="textFilters.controls.creatorEmail">
+      @if (textFilters.controls.creatorEmail.value) {
+        <button
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          matTooltip="Clear"
+          (click)="textFilters.controls.creatorEmail.setValue('')"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+
+    <mat-form-field *isGranted="UserRoles.REVIEWER">
+      <mat-label>Creator ID</mat-label>
+      <input matInput [formControl]="textFilters.controls.creatorId">
+      @if (textFilters.controls.creatorId.value) {
+        <button
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          matTooltip="Clear"
+          (click)="textFilters.controls.creatorId.setValue('')"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      }
     </mat-form-field>
   </mat-card-content>
 </mat-card>

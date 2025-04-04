@@ -6,10 +6,11 @@ import {
 } from '../../views/documents/documents.providers';
 import { GetStatusPipe } from '../../pipes/get-status.pipe';
 import { Document, DocumentStatus } from '../../store/document';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-document-review',
-  imports: [MatSelect, MatOption, GetStatusPipe],
+  imports: [MatSelect, MatOption, GetStatusPipe, MatFormFieldModule],
   templateUrl: './document-review.component.html',
   styleUrl: './document-review.component.scss',
 })
@@ -18,6 +19,7 @@ export class DocumentReviewComponent {
   public reviewerStatuses = inject(DOCUMENTS_REVIEWER_STATUSES);
 
   public document = input.required<Document>();
+  public enableFormField = input<boolean>(false);
 
   public changeDocumentStatus = output<{
     id: string;

@@ -1,12 +1,26 @@
 @if (canBeReviewed()) {
-  <mat-select
-    [value]="document().status"
-    (selectionChange)="changeDocumentStatus.emit({id: document().id, status: $event.value})"
-  >
-    @for (status of statuses(); track status) {
-      <mat-option [value]="status">{{ status | getStatus }}</mat-option>
-    }
-  </mat-select>
+  @if (enableFormField()) {
+    <mat-form-field class="field">
+      <mat-label>Status</mat-label>
+      <mat-select
+        [value]="document().status"
+        (selectionChange)="changeDocumentStatus.emit({id: document().id, status: $event.value})"
+      >
+        @for (status of statuses(); track status) {
+          <mat-option [value]="status">{{ status | getStatus }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  } @else {
+    <mat-select
+      [value]="document().status"
+      (selectionChange)="changeDocumentStatus.emit({id: document().id, status: $event.value})"
+    >
+      @for (status of statuses(); track status) {
+        <mat-option [value]="status">{{ status | getStatus }}</mat-option>
+      }
+    </mat-select>
+  }
 } @else {
   <span>{{ document().status | getStatus }}</span>
 }

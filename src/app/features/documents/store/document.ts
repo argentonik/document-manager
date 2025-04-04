@@ -15,7 +15,3 @@ export enum DocumentStatus {
   APPROVED = 'APPROVED',
   DECLINED = 'DECLINED',
 }
-
-export const DOCUMENT_REVOKING_STATUSES = [DocumentStatus.READY_FOR_REVIEW];
-
-export const DOCUMENT_REVIEWING_STATUSES = [DocumentStatus.DRAFT];

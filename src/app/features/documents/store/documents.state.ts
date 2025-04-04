@@ -42,10 +42,10 @@ export const DocumentsStore = signalStore(
     const dialog = inject(MatDialog);
     const snackBar = inject(MatSnackBar);
 
-    const errorHandler = (error: HttpErrorResponse) => {
-      console.error(error);
+    const errorHandler = (err: HttpErrorResponse) => {
+      console.error(err);
       patchState(store, { updating: false, loading: false });
-      snackBar.open('Something went wrong', 'Close');
+      snackBar.open(err.error.message?.[0] ?? 'Something went wrong', 'Close');
     };
 
     const getDocumentsMethod = () => {

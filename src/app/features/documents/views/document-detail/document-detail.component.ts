@@ -7,7 +7,12 @@ import {
   MatCardTitle,
 } from '@angular/material/card';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { DocumentsStore } from '../../store/documents.state';
 import { MatButton } from '@angular/material/button';
 import { FilePondModule } from 'ngx-filepond';
@@ -22,6 +27,10 @@ import { IsDocumentReviewablePipe } from '../../pipes/is-document-reviewable.pip
 import { IsDocumentRemovablePipe } from '../../pipes/is-document-removable.pipe';
 import { GetStatusPipe } from '../../pipes/get-status.pipe';
 import { PdfViewerComponent } from '../../components/pdf-viewer/pdf-viewer.component';
+import { UserRole } from '../../../../core/auth/models/user-role.enum';
+import { IsGrantedDirective } from '../../../../shared/directives/is-granted.directive';
+import { DocumentReviewComponent } from '../../components/document-review/document-review.component';
+import { DocumentStatus } from '../../store/document';
 
 @Component({
   selector: 'app-document-detail',
@@ -45,6 +54,8 @@ import { PdfViewerComponent } from '../../components/pdf-viewer/pdf-viewer.compo
     GetStatusPipe,
     MatCardContent,
     PdfViewerComponent,
+    IsGrantedDirective,
+    DocumentReviewComponent,
   ],
   providers: [DocumentStore],
   templateUrl: './document-detail.component.html',
@@ -58,20 +69,15 @@ export class DocumentDetailComponent implements OnInit {
 
   public id = input<string>();
 
+  public UserRoles = UserRole;
   public document = this.documentStore.document;
   public loading = this.documentStore.loading;
 
-  public form = this.fb.group({
-    name: [''],
-  });
+  public nameControl = new FormControl('', [Validators.required]);
 
   constructor() {
     effect(() => {
-      console.log('updating', this.documentsStore.updating());
-    });
-
-    effect(() => {
-      this.form.patchValue({ name: this.document()?.name });
+      this.nameControl.setValue(this.document()?.name ?? '');
     });
 
     effect(() => {
@@ -104,13 +110,17 @@ export class DocumentDetailComponent implements OnInit {
     return this.documentsStore.deleteDocument(this.document()!.id);
   }
 
-  public save() {
-    if (this.form.invalid) {
+  public changeStatus(data: { id: string; status: DocumentStatus }) {
+    this.documentsStore.changeDocumentStatus(data);
+  }
+
+  public saveName() {
+    if (this.nameControl.invalid) {
       return;
     }
     this.documentsStore.updateDocument({
       id: this.id()!,
-      data: { name: this.form.value.name! },
+      data: { name: this.nameControl.value! },
     });
   }
 }

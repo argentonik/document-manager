@@ -8,22 +8,32 @@
   @if (document(); as document) {
     <div></div>
     <mat-card-title class="title">
-      <h2>Document view</h2>
+      <h2>
+        "{{ document.name }}" document view
+      </h2>
     </mat-card-title>
 
-    <mat-card-subtitle>{{ document.status | getStatus }}</mat-card-subtitle>
+    <mat-card-subtitle class="subtitle">Status: {{ document.status | getStatus }}</mat-card-subtitle>
 
     <mat-card-content class="content">
       <app-pdf-viewer [fileUrl]="document.fileUrl"></app-pdf-viewer>
 
-      <div [formGroup]="form" class="form">
-        <mat-form-field>
+      <div class="form">
+        <mat-form-field *isGranted="UserRoles.USER">
           <mat-label>Name</mat-label>
-          <input matInput formControlName="name">
+          <input matInput [formControl]="nameControl">
         </mat-form-field>
 
+        <app-document-review
+          *isGranted="UserRoles.REVIEWER"
+          [document]="document"
+          [enableFormField]="true"
+          (changeDocumentStatus)="changeStatus($event)"
+        >
+        </app-document-review>
+
         <mat-card-actions>
-          <div class="additional-actions">
+          <div class="additional-actions" *isGranted="UserRoles.USER">
             @if (document | isDocumentReviewable) {
               <button mat-flat-button (click)="sendDocumentToReview()">
                 <mat-icon>send</mat-icon>
@@ -38,16 +48,18 @@
           </div>
 
           <div class="actions">
-            @if (document | isDocumentRemovable) {
-              <button mat-button (click)="deleteDocument()">
-                <mat-icon>delete</mat-icon>
-                Delete
+            <ng-container *isGranted="UserRoles.USER">
+              @if (document | isDocumentRemovable) {
+                <button mat-button (click)="deleteDocument()">
+                  <mat-icon>delete</mat-icon>
+                  Delete
+                </button>
+              }
+              <button mat-flat-button (click)="saveName()">
+                <mat-icon>save</mat-icon>
+                Save
               </button>
-            }
-            <button mat-flat-button (click)="save()">
-              <mat-icon>save</mat-icon>
-              Save
-            </button>
+            </ng-container>
           </div>
         </mat-card-actions>
       </div>

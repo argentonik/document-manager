@@ -9,7 +9,7 @@
 
 <app-documents-filters
   [filters]="filters()"
-  (filter)="filterDocuments($event)">
+  (filtersChange)="filterDocuments($event)">
 </app-documents-filters>
 
 <app-documents-list
@@ -18,7 +18,7 @@
   [count]="count()"
   [filters]="filters()"
   [loading]="loading()"
-  
+
   (filtersChange)="filterDocuments($event)"
   (viewDocument)="toViewDocument($event)"
   (sendDocumentToReview)="sendDocumentToReview($event)"
