@@ -30,6 +30,10 @@ html {
     row-item-outline-width: 2px,
   ));
 
+  @include mat.select-overrides((
+    trigger-text-size: 14px,
+  ));
+
   table {
     tr th.mat-mdc-header-cell {
       background-color: var(--color-primary-95);

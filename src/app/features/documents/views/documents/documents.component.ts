@@ -9,6 +9,8 @@ import { DocumentsFiltersComponent } from '../../components/documents-filters/do
 import { DocumentFilters } from '../../models/document-filters.interface';
 import { IsGrantedDirective } from '../../../../shared/directives/is-granted.directive';
 import { UserRole } from '../../../../core/auth/models/user-role.enum';
+import { DOCUMENTS_COLUMNS } from './documents.providers';
+import { DocumentStatus } from '../../store/document';
 
 @Component({
   selector: 'app-documents',
@@ -27,6 +29,7 @@ export class DocumentsComponent {
   private store = inject(DocumentsStore);
 
   public Roles = UserRole;
+  public columns = inject(DOCUMENTS_COLUMNS);
   public items = this.store.items;
   public count = this.store.count;
   public filters = this.store.filters;
@@ -50,6 +53,10 @@ export class DocumentsComponent {
 
   public revokeDocument(id: string) {
     this.store.revokeDocument(id);
+  }
+
+  public changeDocumentStatus(data: { id: string; status: DocumentStatus }) {
+    this.store.changeDocumentStatus({ ...data });
   }
 
   public deleteDocument(id: string) {

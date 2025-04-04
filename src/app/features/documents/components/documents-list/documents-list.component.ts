@@ -7,7 +7,7 @@ import {
   output,
   viewChild,
 } from '@angular/core';
-import { Document } from '../../store/document';
+import { Document, DocumentStatus } from '../../store/document';
 import { MatTableModule } from '@angular/material/table';
 import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { DatePipe } from '@angular/common';
@@ -23,6 +23,7 @@ import { IsDocumentReviewablePipe } from '../../pipes/is-document-reviewable.pip
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { DocumentFilters } from '../../models/document-filters.interface';
 import { MatSort, MatSortHeader, SortDirection } from '@angular/material/sort';
+import { DocumentReviewComponent } from '../document-review/document-review.component';
 
 @Component({
   selector: 'app-documents-list',
@@ -45,19 +46,13 @@ import { MatSort, MatSortHeader, SortDirection } from '@angular/material/sort';
     MatPaginator,
     MatSort,
     MatSortHeader,
+    DocumentReviewComponent,
   ],
   templateUrl: './documents-list.component.html',
   styleUrl: './documents-list.component.scss',
 })
 export class DocumentsListComponent implements AfterViewInit {
-  public displayedColumns: string[] = [
-    'name',
-    'status',
-    'updatedAt',
-    'delete',
-    'view',
-  ];
-
+  public columns = input.required<string[]>();
   public documents = input.required<Document[]>();
   public loading = input<boolean>(false);
   public count = input<number>(0);
@@ -65,6 +60,10 @@ export class DocumentsListComponent implements AfterViewInit {
 
   public viewDocument = output<string>();
   public sendDocumentToReview = output<string>();
+  public changeDocumentStatus = output<{
+    id: string;
+    status: DocumentStatus;
+  }>();
   public revokeDocument = output<string>();
   public deleteDocument = output<string>();
 
@@ -77,6 +76,12 @@ export class DocumentsListComponent implements AfterViewInit {
   public sortDirection = computed(() => {
     const sort = this.filters()?.sort;
     return (sort ? sort.split(',')[1] : 'desc') as SortDirection;
+  });
+  public showCreatorColumn = computed(() => {
+    return this.columns().includes('creator');
+  });
+  public showReviewColumn = computed(() => {
+    return this.columns().includes('review');
   });
 
   public ngAfterViewInit() {

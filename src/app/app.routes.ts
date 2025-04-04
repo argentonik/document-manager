@@ -41,21 +41,21 @@ export const routes: Routes = [
         path: '',
         loadComponent: () =>
           import(
-            './features/documents/pages/documents/documents.component'
+            './features/documents/views/documents/documents.component'
           ).then((c) => c.DocumentsComponent),
       },
       {
         path: `create`,
         loadComponent: () =>
           import(
-            './features/documents/pages/document-create/document-create.component'
+            './features/documents/views/document-create/document-create.component'
           ).then((c) => c.DocumentCreateComponent),
       },
       {
         path: `edit/:id`,
         loadComponent: () =>
           import(
-            './features/documents/pages/document-detail/document-detail.component'
+            './features/documents/views/document-detail/document-detail.component'
           ).then((c) => c.DocumentDetailComponent),
       },
       {

@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { CONFIG } from '../../../core/config/config.provider';
+import { CONFIG } from '../../../../core/config/config.provider';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { CreateDocumentReq } from '../models/create-document-req.interface';
-import { Document, DocumentStatus } from '../store/document';
-import { List } from '../models/list.interface';
-import { DocumentFilters } from '../models/document-filters.interface';
+import { CreateDocumentReq } from '../../models/create-document-req.interface';
+import { Document, DocumentStatus } from '../../store/document';
+import { List } from '../../models/list.interface';
+import { DocumentFilters } from '../../models/document-filters.interface';
 
 @Injectable({
   providedIn: 'root',

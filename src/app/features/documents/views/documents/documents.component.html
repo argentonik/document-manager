@@ -13,13 +13,16 @@
 </app-documents-filters>
 
 <app-documents-list
+  [columns]="columns"
   [documents]="items()"
   [count]="count()"
   [filters]="filters()"
   [loading]="loading()"
+  
   (filtersChange)="filterDocuments($event)"
   (viewDocument)="toViewDocument($event)"
   (sendDocumentToReview)="sendDocumentToReview($event)"
+  (changeDocumentStatus)="changeDocumentStatus($event)"
   (revokeDocument)="revokeDocument($event)"
   (deleteDocument)="deleteDocument($event)"
 ></app-documents-list>

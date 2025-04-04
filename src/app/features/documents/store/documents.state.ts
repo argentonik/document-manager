@@ -7,7 +7,7 @@ import {
 } from '@ngrx/signals';
 import { Document, DocumentStatus } from './document';
 import { inject } from '@angular/core';
-import { DocumentsService } from '../services/documents.service';
+import { DocumentsService } from '../views/documents/documents.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { asapScheduler, map, pipe, scheduled, switchMap, tap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
@@ -155,6 +155,23 @@ export const DocumentsStore = signalStore(
         ),
       ),
 
+      changeDocumentStatus: rxMethod<{ id: string; status: DocumentStatus }>(
+        pipe(
+          switchMap(({ id, status }) => {
+            patchState(store, { updating: true });
+            return service.changeStatus(id, status);
+          }),
+          tapResponse({
+            next: () => {
+              patchState(store, { updating: false });
+              snackBar.open(`Document status has been changed`, 'Close');
+            },
+            error: errorHandler,
+          }),
+          switchMap(() => getDocumentsMethod()),
+        ),
+      ),
+
       deleteDocument: rxMethod<string>(
         pipe(
           switchMap((id) => {
@@ -166,7 +183,6 @@ export const DocumentsStore = signalStore(
             if (!id) {
               return scheduled([undefined], asapScheduler);
             }
-            console.log('???????????????');
             patchState(store, { updating: true });
             return service.removeDocument(id).pipe(
               tapResponse({

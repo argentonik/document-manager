@@ -16,16 +16,6 @@ export enum DocumentStatus {
   DECLINED = 'DECLINED',
 }
 
-export const DOCUMENT_CREATION_STATUSES = [
-  DocumentStatus.DRAFT,
-  DocumentStatus.READY_FOR_REVIEW,
-];
-
-export const DOCUMENT_DELETING_STATUSES = [
-  DocumentStatus.DRAFT,
-  DocumentStatus.REVOKE,
-];
-
 export const DOCUMENT_REVOKING_STATUSES = [DocumentStatus.READY_FOR_REVIEW];
 
 export const DOCUMENT_REVIEWING_STATUSES = [DocumentStatus.DRAFT];
