@@ -11,13 +11,8 @@ import {
   MatDrawerContainer,
   MatDrawerContent,
 } from '@angular/material/sidenav';
-import {
-  MatList,
-  MatListItem,
-  MatListItemIcon,
-  MatListItemTitle,
-  MatListModule,
-} from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
+import { DocumentsStore } from '../../../features/documents/store/documents.state';
 
 @Component({
   selector: 'app-main-layout',
@@ -37,6 +32,7 @@ import {
     MatDrawerContent,
     MatListModule,
   ],
+  providers: [DocumentsStore],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss',
 })

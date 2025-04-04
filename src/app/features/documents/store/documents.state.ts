@@ -35,8 +35,6 @@ const initialState = {
 };
 
 export const DocumentsStore = signalStore(
-  { providedIn: 'root' },
-
   withState(initialState),
 
   withMethods((store) => {
@@ -168,7 +166,8 @@ export const DocumentsStore = signalStore(
             if (!id) {
               return scheduled([undefined], asapScheduler);
             }
-            patchState(store, { loading: true });
+            console.log('???????????????');
+            patchState(store, { updating: true });
             return service.removeDocument(id).pipe(
               tapResponse({
                 next: () => {
@@ -192,6 +191,7 @@ export const DocumentsStore = signalStore(
 
   withHooks({
     onInit({ getDocuments }) {
+      console.log('store init!');
       getDocuments();
     },
   }),

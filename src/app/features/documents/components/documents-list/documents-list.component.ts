@@ -2,8 +2,6 @@ import {
   AfterViewInit,
   Component,
   computed,
-  DestroyRef,
-  inject,
   input,
   model,
   output,
@@ -52,8 +50,6 @@ import { MatSort, MatSortHeader, SortDirection } from '@angular/material/sort';
   styleUrl: './documents-list.component.scss',
 })
 export class DocumentsListComponent implements AfterViewInit {
-  private destroyRef = inject(DestroyRef);
-
   public displayedColumns: string[] = [
     'name',
     'status',

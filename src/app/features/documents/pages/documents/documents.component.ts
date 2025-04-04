@@ -7,6 +7,8 @@ import { AppSection } from '../../../../shared/models/enums/app-section.enum';
 import { DocumentsListComponent } from '../../components/documents-list/documents-list.component';
 import { DocumentsFiltersComponent } from '../../components/documents-filters/documents-filters.component';
 import { DocumentFilters } from '../../models/document-filters.interface';
+import { IsGrantedDirective } from '../../../../shared/directives/is-granted.directive';
+import { UserRole } from '../../../../core/auth/models/user-role.enum';
 
 @Component({
   selector: 'app-documents',
@@ -15,6 +17,7 @@ import { DocumentFilters } from '../../models/document-filters.interface';
     MatIcon,
     DocumentsListComponent,
     DocumentsFiltersComponent,
+    IsGrantedDirective,
   ],
   templateUrl: './documents.component.html',
   styleUrl: './documents.component.scss',
@@ -23,17 +26,18 @@ export class DocumentsComponent {
   private router = inject(Router);
   private store = inject(DocumentsStore);
 
+  public Roles = UserRole;
   public items = this.store.items;
   public count = this.store.count;
   public filters = this.store.filters;
   public loading = this.store.loading;
 
   public toCreateDocument() {
-    this.router.navigate([`${AppSection.DOCUMENT}/create`]);
+    this.router.navigate([`${AppSection.DOCUMENTS}/create`]);
   }
 
   public toViewDocument(id: string) {
-    this.router.navigate([`${AppSection.DOCUMENT}/edit/${id}`]);
+    this.router.navigate([`${AppSection.DOCUMENTS}/edit/${id}`]);
   }
 
   public filterDocuments(filters: Partial<DocumentFilters> | undefined) {

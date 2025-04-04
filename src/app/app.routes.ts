@@ -30,7 +30,7 @@ export const routes: Routes = [
     ],
   },
   {
-    path: AppSection.MAIN,
+    path: AppSection.DOCUMENTS,
     component: MainLayoutComponent,
     canActivate: [authGuard],
     resolve: {
@@ -38,21 +38,21 @@ export const routes: Routes = [
     },
     children: [
       {
-        path: AppSection.DOCUMENTS,
+        path: '',
         loadComponent: () =>
           import(
             './features/documents/pages/documents/documents.component'
           ).then((c) => c.DocumentsComponent),
       },
       {
-        path: `${AppSection.DOCUMENT}/create`,
+        path: `create`,
         loadComponent: () =>
           import(
             './features/documents/pages/document-create/document-create.component'
           ).then((c) => c.DocumentCreateComponent),
       },
       {
-        path: `${AppSection.DOCUMENT}/edit/:id`,
+        path: `edit/:id`,
         loadComponent: () =>
           import(
             './features/documents/pages/document-detail/document-detail.component'
@@ -60,8 +60,12 @@ export const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: AppSection.DOCUMENTS,
+        redirectTo: '',
       },
     ],
+  },
+  {
+    path: '**',
+    redirectTo: AppSection.DOCUMENTS,
   },
 ];

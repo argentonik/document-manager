@@ -1,4 +1,8 @@
-<button mat-flat-button (click)="toCreateDocument()">
+<button
+  mat-flat-button
+  *isGranted="Roles.USER"
+  (click)="toCreateDocument()"
+>
   <mat-icon>add</mat-icon>
   Add Document
 </button>

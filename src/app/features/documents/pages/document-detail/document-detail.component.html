@@ -1,22 +1,56 @@
 <app-back-button (click)="toDocumentsList()"></app-back-button>
 
 <mat-card class="card">
-  <mat-card-title>Document view</mat-card-title>
   @if (loading()) {
     <app-loader class="loader"></app-loader>
   }
+
   @if (document(); as document) {
-    <form [formGroup]="form" (ngSubmit)="save()" class="form">
-      <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input matInput formControlName="name">
-      </mat-form-field>
+    <div></div>
+    <mat-card-title class="title">
+      <h2>Document view</h2>
+    </mat-card-title>
 
-      <div>
-        Status: {{ document.status }}
+    <mat-card-subtitle>{{ document.status | getStatus }}</mat-card-subtitle>
+
+    <mat-card-content class="content">
+      <app-pdf-viewer [fileUrl]="document.fileUrl"></app-pdf-viewer>
+
+      <div [formGroup]="form" class="form">
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
+
+        <mat-card-actions>
+          <div class="additional-actions">
+            @if (document | isDocumentReviewable) {
+              <button mat-flat-button (click)="sendDocumentToReview()">
+                <mat-icon>send</mat-icon>
+                Send to review
+              </button>
+            } @else if (document | isDocumentRevokable) {
+              <button mat-flat-button (click)="revokeDocument()">
+                <mat-icon>stop</mat-icon>
+                Revoke
+              </button>
+            }
+          </div>
+
+          <div class="actions">
+            @if (document | isDocumentRemovable) {
+              <button mat-button (click)="deleteDocument()">
+                <mat-icon>delete</mat-icon>
+                Delete
+              </button>
+            }
+            <button mat-flat-button (click)="save()">
+              <mat-icon>save</mat-icon>
+              Save
+            </button>
+          </div>
+        </mat-card-actions>
       </div>
-
-      <button mat-flat-button>Save</button>
-    </form>
+    </mat-card-content>
   }
 </mat-card>
