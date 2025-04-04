@@ -24,4 +24,15 @@ html {
   @include mat.paginator-overrides((
     container-background-color: var(--color-primary-100),
   ));
+
+  @include mat.table-overrides((
+    row-item-outline-color: var(--color-primary-95),
+    row-item-outline-width: 2px,
+  ));
+
+  table {
+    tr th.mat-mdc-header-cell {
+      background-color: var(--color-primary-95);
+    }
+  }
 }

@@ -1,4 +1,14 @@
-import { Component, input, model, output } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  input,
+  model,
+  output,
+  viewChild,
+} from '@angular/core';
 import { Document } from '../../store/document';
 import { MatTableModule } from '@angular/material/table';
 import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
@@ -14,6 +24,7 @@ import { GetStatusPipe } from '../../pipes/get-status.pipe';
 import { IsDocumentReviewablePipe } from '../../pipes/is-document-reviewable.pipe';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { DocumentFilters } from '../../models/document-filters.interface';
+import { MatSort, MatSortHeader, SortDirection } from '@angular/material/sort';
 
 @Component({
   selector: 'app-documents-list',
@@ -34,11 +45,15 @@ import { DocumentFilters } from '../../models/document-filters.interface';
     IsDocumentReviewablePipe,
     MatCardTitle,
     MatPaginator,
+    MatSort,
+    MatSortHeader,
   ],
   templateUrl: './documents-list.component.html',
   styleUrl: './documents-list.component.scss',
 })
-export class DocumentsListComponent {
+export class DocumentsListComponent implements AfterViewInit {
+  private destroyRef = inject(DestroyRef);
+
   public displayedColumns: string[] = [
     'name',
     'status',
@@ -56,6 +71,23 @@ export class DocumentsListComponent {
   public sendDocumentToReview = output<string>();
   public revokeDocument = output<string>();
   public deleteDocument = output<string>();
+
+  public sort = viewChild(MatSort);
+
+  public sortActive = computed(() => {
+    const sort = this.filters()?.sort;
+    return sort ? sort.split(',')[0] : '';
+  });
+  public sortDirection = computed(() => {
+    const sort = this.filters()?.sort;
+    return (sort ? sort.split(',')[1] : 'desc') as SortDirection;
+  });
+
+  public ngAfterViewInit() {
+    this.sort()?.sortChange.subscribe((sort) => {
+      this.filters.set({ sort: `${sort.active},${sort.direction}` });
+    });
+  }
 
   public onPaginate(event: PageEvent) {
     const page = event.pageIndex + 1;
