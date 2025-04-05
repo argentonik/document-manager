@@ -1,5 +1,5 @@
-@if (canBeReviewed()) {
-  @if (enableFormField()) {
+@if (enableFormField()) {
+  @if (canBeReviewed()) {
     <mat-form-field class="field">
       <mat-label>Status</mat-label>
       <mat-select
@@ -11,7 +11,9 @@
         }
       </mat-select>
     </mat-form-field>
-  } @else {
+  }
+} @else {
+  @if (canBeReviewed()) {
     <mat-select
       [value]="document().status"
       (selectionChange)="changeDocumentStatus.emit({id: document().id, status: $event.value})"
@@ -20,7 +22,7 @@
         <mat-option [value]="status">{{ status | getStatus }}</mat-option>
       }
     </mat-select>
+  } @else {
+    <span>{{ document().status | getStatus }}</span>
   }
-} @else {
-  <span>{{ document().status | getStatus }}</span>
 }

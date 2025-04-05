@@ -6,8 +6,8 @@ import {
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
-import { UserRole } from '../../core/auth/models/user-role.enum';
-import { AuthService } from '../../core/auth/auth.service';
+import { UserRole } from '../models/user-role.enum';
+import { AuthService } from '../auth.service';
 
 @Directive({
   selector: '[isGranted]',

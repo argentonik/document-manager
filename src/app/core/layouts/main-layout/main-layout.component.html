@@ -18,19 +18,6 @@
 </mat-toolbar>
 
 <mat-drawer-container class="container">
-  <mat-drawer mode="side" opened class="sidebar">
-    <mat-list role="menu">
-      <mat-list-item role="menuitem" class="menu-item">
-        <mat-icon matListItemIcon class="menu-item-text">
-          dashboard
-        </mat-icon>
-        <div matListItemTitle class="menu-item-icon">
-          <a routerLink="documents">Dashboard</a>
-        </div>
-      </mat-list-item>
-    </mat-list>
-  </mat-drawer>
-
   <mat-drawer-content class="content">
     <router-outlet></router-outlet>
   </mat-drawer-content>

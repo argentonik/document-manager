@@ -7,14 +7,10 @@ import { AppSection } from '../../../../shared/models/enums/app-section.enum';
 import { DocumentsListComponent } from '../../components/documents-list/documents-list.component';
 import { DocumentsFiltersComponent } from '../../components/documents-filters/documents-filters.component';
 import { DocumentFilters } from '../../models/document-filters.interface';
-import { IsGrantedDirective } from '../../../../shared/directives/is-granted.directive';
+import { IsGrantedDirective } from '../../../../core/auth/directives/is-granted.directive';
 import { UserRole } from '../../../../core/auth/models/user-role.enum';
-import {
-  documentColumnsFactory,
-  DOCUMENTS_COLUMNS,
-} from './documents.providers';
+import { DOCUMENTS_COLUMNS } from './documents.providers';
 import { DocumentStatus } from '../../store/document';
-import { AuthService } from '../../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-documents',
@@ -24,13 +20,6 @@ import { AuthService } from '../../../../core/auth/auth.service';
     DocumentsListComponent,
     DocumentsFiltersComponent,
     IsGrantedDirective,
-  ],
-  providers: [
-    {
-      provide: DOCUMENTS_COLUMNS,
-      useFactory: documentColumnsFactory,
-      deps: [AuthService],
-    },
   ],
   templateUrl: './documents.component.html',
   styleUrl: './documents.component.scss',

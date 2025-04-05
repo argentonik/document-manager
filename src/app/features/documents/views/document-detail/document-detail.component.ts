@@ -7,12 +7,7 @@ import {
   MatCardTitle,
 } from '@angular/material/card';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
-import {
-  FormBuilder,
-  FormControl,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DocumentsStore } from '../../store/documents.state';
 import { MatButton } from '@angular/material/button';
 import { FilePondModule } from 'ngx-filepond';
@@ -28,7 +23,7 @@ import { IsDocumentRemovablePipe } from '../../pipes/is-document-removable.pipe'
 import { GetStatusPipe } from '../../pipes/get-status.pipe';
 import { PdfViewerComponent } from '../../components/pdf-viewer/pdf-viewer.component';
 import { UserRole } from '../../../../core/auth/models/user-role.enum';
-import { IsGrantedDirective } from '../../../../shared/directives/is-granted.directive';
+import { IsGrantedDirective } from '../../../../core/auth/directives/is-granted.directive';
 import { DocumentReviewComponent } from '../../components/document-review/document-review.component';
 import { DocumentStatus } from '../../store/document';
 
@@ -62,7 +57,6 @@ import { DocumentStatus } from '../../store/document';
   styleUrl: './document-detail.component.scss',
 })
 export class DocumentDetailComponent implements OnInit {
-  private fb = inject(FormBuilder);
   private router = inject(Router);
   private documentStore = inject(DocumentStore);
   private documentsStore = inject(DocumentsStore);

@@ -199,15 +199,10 @@ export const DocumentsStore = signalStore(
       ),
     };
   }),
-  //
-  // withComputed(({ filters }) => ({
-  //   page: computed(() => filters.page),
-  //   pageSize: computed(() => filters.size),
-  // })),
 
   withHooks({
     onInit({ getDocuments }) {
-      console.log('store init!');
+      console.log('init store');
       getDocuments();
     },
   }),

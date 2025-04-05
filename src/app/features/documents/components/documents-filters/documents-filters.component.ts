@@ -19,7 +19,7 @@ import { MatOption } from '@angular/material/core';
 import { DocumentFilters } from '../../models/document-filters.interface';
 import { GetStatusPipe } from '../../pipes/get-status.pipe';
 import { MatInput } from '@angular/material/input';
-import { IsGrantedDirective } from '../../../../shared/directives/is-granted.directive';
+import { IsGrantedDirective } from '../../../../core/auth/directives/is-granted.directive';
 import { UserRole } from '../../../../core/auth/models/user-role.enum';
 import { debounceTime } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';

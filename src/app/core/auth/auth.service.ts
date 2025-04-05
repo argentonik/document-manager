@@ -9,7 +9,7 @@ import { User } from './models/user.interface';
 import { Router } from '@angular/router';
 import { AppSection } from '../../shared/models/enums/app-section.enum';
 
-const TOKEN_KEY = 'auth_token';
+export const TOKEN_KEY = 'auth_token';
 
 @Injectable({
   providedIn: 'root',
