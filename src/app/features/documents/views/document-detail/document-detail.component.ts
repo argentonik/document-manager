@@ -6,7 +6,12 @@ import {
   MatCardSubtitle,
   MatCardTitle,
 } from '@angular/material/card';
-import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import {
+  MatError,
+  MatFormField,
+  MatInput,
+  MatLabel,
+} from '@angular/material/input';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DocumentsStore } from '../../store/documents.state';
 import { MatButton } from '@angular/material/button';
@@ -26,6 +31,8 @@ import { UserRole } from '../../../../core/auth/models/user-role.enum';
 import { IsGrantedDirective } from '../../../../core/auth/directives/is-granted.directive';
 import { DocumentReviewComponent } from '../../components/document-review/document-review.component';
 import { DocumentStatus } from '../../store/document';
+import { MaxLengthErrorPipe } from '../../../../shared/pipes/max-length-error.pipe';
+import { RequiredErrorPipe } from '../../../../shared/pipes/required-error.pipe';
 
 @Component({
   selector: 'app-document-detail',
@@ -51,6 +58,9 @@ import { DocumentStatus } from '../../store/document';
     PdfViewerComponent,
     IsGrantedDirective,
     DocumentReviewComponent,
+    MatError,
+    MaxLengthErrorPipe,
+    RequiredErrorPipe,
   ],
   providers: [DocumentStore],
   templateUrl: './document-detail.component.html',
@@ -67,7 +77,10 @@ export class DocumentDetailComponent implements OnInit {
   public document = this.documentStore.document;
   public loading = this.documentStore.loading;
 
-  public nameControl = new FormControl('', [Validators.required]);
+  public nameControl = new FormControl('', [
+    Validators.required,
+    Validators.maxLength(64),
+  ]);
 
   constructor() {
     effect(() => {

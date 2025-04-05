@@ -1,7 +1,9 @@
-<mat-card class="card">
-  <mat-card-title>Filters</mat-card-title>
+<mat-expansion-panel class="card" [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>Filters</mat-panel-title>
+  </mat-expansion-panel-header>
 
-  <mat-card-content class="fields">
+  <div class="fields">
     <mat-form-field>
       <mat-label>Status</mat-label>
       <mat-select [(ngModel)]="status" (ngModelChange)="onStatusChange($event)">
@@ -43,5 +45,5 @@
         </button>
       }
     </mat-form-field>
-  </mat-card-content>
-</mat-card>
+  </div>
+</mat-expansion-panel>

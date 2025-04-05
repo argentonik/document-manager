@@ -1,9 +1,11 @@
 .card {
   position: relative;
+  padding: 0;
 }
 
 .fields {
   display: flex;
   flex-wrap: wrap;
   column-gap: 24px;
+  padding-left: 16px;
 }

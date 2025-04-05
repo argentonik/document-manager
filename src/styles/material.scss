@@ -21,6 +21,11 @@ html {
     elevated-container-color: var(--color-primary-100),
   ));
 
+  @include mat.expansion-overrides((
+    container-background-color: var(--color-primary-100),
+    header-text-size: 22px,
+  ));
+
   @include mat.paginator-overrides((
     container-background-color: var(--color-primary-100),
   ));

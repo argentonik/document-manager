@@ -19,6 +19,8 @@ import { MatIcon } from '@angular/material/icon';
 
 // import and register filepond file type validation plugin
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import { RequiredErrorPipe } from '../../../../shared/pipes/required-error.pipe';
+import { MaxLengthErrorPipe } from '../../../../shared/pipes/max-length-error.pipe';
 
 @Component({
   selector: 'app-document-create',
@@ -34,6 +36,8 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
     MatCardTitle,
     MatCardActions,
     MatIcon,
+    RequiredErrorPipe,
+    MaxLengthErrorPipe,
   ],
   templateUrl: './document-create.component.html',
   styleUrl: './document-create.component.scss',
@@ -45,10 +49,7 @@ export class DocumentCreateComponent {
   private acceptedFileTypes = ['application/pdf'];
 
   public form = this.fb.group({
-    name: [
-      '',
-      [Validators.required, Validators.minLength(1), Validators.maxLength(64)],
-    ],
+    name: ['', [Validators.required, Validators.maxLength(64)]],
     file: [<File | undefined>undefined, [Validators.required]],
   });
 

@@ -22,6 +22,15 @@
         <mat-form-field *isGranted="UserRoles.USER">
           <mat-label>Name</mat-label>
           <input matInput [formControl]="nameControl">
+
+          @if (nameControl.errors?.['required']) {
+            <mat-error>{{ 'Document' | requiredError }}</mat-error>
+          }
+          @if (nameControl.errors?.['maxlength']) {
+            <mat-error>
+              {{ 'Document name' | maxLengthError: nameControl }}
+            </mat-error>
+          }
         </mat-form-field>
 
         <app-document-review

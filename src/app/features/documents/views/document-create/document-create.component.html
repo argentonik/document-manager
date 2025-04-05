@@ -9,16 +9,11 @@
       <input matInput formControlName="name">
 
       @if (form.controls.name.errors?.['required']) {
-        <mat-error>Document name is required</mat-error>
-      }
-      @if (form.controls.name.errors?.['minlength']) {
-        <mat-error>Document name must be at least {{ form.controls.name.errors?.['minlength'].requiredLength }}
-          characters long
-        </mat-error>
+        <mat-error>{{ 'Document' | requiredError }}</mat-error>
       }
       @if (form.controls.name.errors?.['maxlength']) {
-        <mat-error>Document name must be at most {{ form.controls.name.errors?.['maxlength'].requiredLength }}
-          characters long
+        <mat-error>
+          {{ 'Document name' | maxLengthError: form.controls.name }}
         </mat-error>
       }
     </mat-form-field>
@@ -33,7 +28,9 @@
       </file-pond>
 
       @if (form.controls.file['touched'] && form.controls.file.errors?.['required']) {
-        <mat-error class="smr error">Document is required</mat-error>
+        <mat-error class="smr error">
+          {{ 'Document' | requiredError }}
+        </mat-error>
       }
     </div>
 

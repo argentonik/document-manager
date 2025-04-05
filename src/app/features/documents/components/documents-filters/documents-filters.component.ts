@@ -6,7 +6,6 @@ import {
   OnChanges,
   signal,
 } from '@angular/core';
-import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { DocumentStatus } from '../../store/document';
 import {
   FormsModule,
@@ -26,13 +25,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-documents-filters',
   imports: [
-    MatCard,
-    MatCardTitle,
-    MatCardContent,
+    MatExpansionModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
