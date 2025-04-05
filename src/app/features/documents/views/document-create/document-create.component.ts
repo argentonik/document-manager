@@ -46,6 +46,7 @@ export class DocumentCreateComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private documentsStore = inject(DocumentsStore);
+
   private acceptedFileTypes = ['application/pdf'];
 
   public form = this.fb.group({

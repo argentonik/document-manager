@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfirmationModalComponent } from './confirmation-modal.component';
+import { provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 describe('ConfirmationModalComponent', () => {
   let component: ConfirmationModalComponent;
@@ -8,9 +10,15 @@ describe('ConfirmationModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ConfirmationModalComponent]
-    })
-    .compileComponents();
+      providers: [
+        provideExperimentalZonelessChangeDetection(),
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: 'test.txt',
+        },
+      ],
+      imports: [ConfirmationModalComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfirmationModalComponent);
     component = fixture.componentInstance;

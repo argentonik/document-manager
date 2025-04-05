@@ -11,7 +11,8 @@ import { MatOption } from '@angular/material/core';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { AuthService } from '../../../core/auth/auth.service';
 import {
-  NonNullableFormBuilder,
+  FormControl,
+  FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -43,27 +44,29 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class SignUpComponent {
   private router = inject(Router);
-  private formBuilder = inject(NonNullableFormBuilder);
   private authService = inject(AuthService);
   private snackBar = inject(SnackBarService);
 
   public pending = signal(false);
   public hidePassword = signal(true);
 
-  public signUpForm = this.formBuilder.group({
-    fullName: [
-      '',
-      [Validators.required, Validators.minLength(3), Validators.maxLength(32)],
-    ],
-    email: [
-      '',
-      [Validators.required, Validators.email, Validators.maxLength(128)],
-    ],
-    password: [
-      '',
-      [Validators.required, Validators.minLength(6), Validators.maxLength(64)],
-    ],
-    role: [<UserRole>UserRole.USER, [Validators.required]],
+  public signUpForm = new FormGroup({
+    fullName: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(32),
+    ]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email,
+      Validators.maxLength(128),
+    ]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(64),
+    ]),
+    role: new FormControl(<UserRole>UserRole.USER, [Validators.required]),
   });
 
   public signUp() {
@@ -72,14 +75,21 @@ export class SignUpComponent {
     }
     this.pending.set(true);
 
-    this.authService.register(this.signUpForm.value).subscribe({
-      next: () => {
-        this.router.navigate([`/${AppSection.AUTH}/${AuthSection.SIGN_IN}`]);
-      },
-      error: (err) => {
-        this.pending.set(false);
-        this.snackBar.error(err.error.message ?? 'Registration failed');
-      },
-    });
+    this.authService
+      .register({
+        fullName: this.signUpForm.value.fullName!,
+        email: this.signUpForm.value.email!,
+        password: this.signUpForm.value.password!,
+        role: this.signUpForm.value.role!,
+      })
+      .subscribe({
+        next: () => {
+          this.router.navigate([`/${AppSection.AUTH}/${AuthSection.SIGN_IN}`]);
+        },
+        error: (err) => {
+          this.pending.set(false);
+          this.snackBar.error(err.error.message ?? 'Registration failed');
+        },
+      });
   }
 }

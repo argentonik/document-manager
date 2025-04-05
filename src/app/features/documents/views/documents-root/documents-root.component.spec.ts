@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DocumentsRootComponent } from './documents-root.component';
+import { provideExperimentalZonelessChangeDetection } from '@angular/core';
 
 describe('DocumentsRootComponent', () => {
   let component: DocumentsRootComponent;
@@ -8,9 +9,9 @@ describe('DocumentsRootComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DocumentsRootComponent]
-    })
-    .compileComponents();
+      providers: [provideExperimentalZonelessChangeDetection()],
+      imports: [DocumentsRootComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DocumentsRootComponent);
     component = fixture.componentInstance;

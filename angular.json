@@ -99,6 +99,12 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@nutrient-sdk/viewer/dist/nutrient-viewer-lib/",
+                "output": "./assets/nutrient-viewer-lib/"
+              },
               {
                 "glob": "**/*",
                 "input": "public"
@@ -108,6 +114,11 @@
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "./src"
+              ]
+            },
             "scripts": []
           }
         }

@@ -23,11 +23,6 @@ export class PdfViewerComponent implements OnInit {
           zoomMode: PSPDFKit.ZoomMode.FIT_TO_VIEWPORT,
         },
       }),
-    }).then((instance) => {
-      // For the sake of this demo, store the Nutrient for Web instance
-      // on the global object so that you can open the dev tools and
-      // play with the Nutrient API.
-      (window as any).instance = instance;
     });
   }
 }

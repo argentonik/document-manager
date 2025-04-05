@@ -8,8 +8,9 @@ import {
 } from '@angular/core';
 import { DocumentStatus } from '../../store/document';
 import {
+  FormControl,
+  FormGroup,
   FormsModule,
-  NonNullableFormBuilder,
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -47,7 +48,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
   styleUrl: './documents-filters.component.scss',
 })
 export class DocumentsFiltersComponent implements OnChanges {
-  private fb = inject(NonNullableFormBuilder);
   private destroyRef = inject(DestroyRef);
 
   public UserRoles = UserRole;
@@ -55,9 +55,9 @@ export class DocumentsFiltersComponent implements OnChanges {
 
   public filters = model<Partial<DocumentFilters>>();
 
-  public textFilters = this.fb.group({
-    creatorId: [''],
-    creatorEmail: [''],
+  public textFilters = new FormGroup({
+    creatorId: new FormControl(''),
+    creatorEmail: new FormControl(''),
   });
   public status = signal<DocumentStatus | -1>(-1);
 

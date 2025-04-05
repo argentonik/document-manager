@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BackButtonComponent } from './back-button.component';
+import { provideExperimentalZonelessChangeDetection } from '@angular/core';
 
 describe('BackButtonComponent', () => {
   let component: BackButtonComponent;
@@ -8,9 +9,9 @@ describe('BackButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BackButtonComponent]
-    })
-    .compileComponents();
+      providers: [provideExperimentalZonelessChangeDetection()],
+      imports: [BackButtonComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BackButtonComponent);
     component = fixture.componentInstance;
