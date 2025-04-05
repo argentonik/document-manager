@@ -4,10 +4,11 @@ import {
   MatFormField,
   MatInput,
   MatLabel,
+  MatSuffix,
 } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import { AuthService } from '../../../core/auth/auth.service';
 import {
   NonNullableFormBuilder,
@@ -18,6 +19,8 @@ import { Router, RouterLink } from '@angular/router';
 import { UserRole } from '../../../core/auth/models/user-role.enum';
 import { AppSection } from '../../../shared/models/enums/app-section.enum';
 import { AuthSection } from '../../../shared/models/enums/auth-section.enum';
+import { SnackBarService } from '../../../core/services/snack-bar.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-sign-up',
@@ -31,6 +34,9 @@ import { AuthSection } from '../../../shared/models/enums/auth-section.enum';
     ReactiveFormsModule,
     RouterLink,
     MatError,
+    MatIcon,
+    MatIconButton,
+    MatSuffix,
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
@@ -39,8 +45,10 @@ export class SignUpComponent {
   private router = inject(Router);
   private formBuilder = inject(NonNullableFormBuilder);
   private authService = inject(AuthService);
+  private snackBar = inject(SnackBarService);
 
   public pending = signal(false);
+  public hidePassword = signal(true);
 
   public signUpForm = this.formBuilder.group({
     fullName: [
@@ -68,8 +76,9 @@ export class SignUpComponent {
       next: () => {
         this.router.navigate([`/${AppSection.AUTH}/${AuthSection.SIGN_IN}`]);
       },
-      error: () => {
+      error: (err) => {
         this.pending.set(false);
+        this.snackBar.error(err.error.message ?? 'Registration failed');
       },
     });
   }

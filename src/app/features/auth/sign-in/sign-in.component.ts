@@ -4,6 +4,7 @@ import {
   MatFormField,
   MatInput,
   MatLabel,
+  MatSuffix,
 } from '@angular/material/input';
 import {
   NonNullableFormBuilder,
@@ -12,8 +13,13 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/auth/auth.service';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import { AppSection } from '../../../shared/models/enums/app-section.enum';
+import { SnackBarService } from '../../../core/services/snack-bar.service';
+import { MatIcon } from '@angular/material/icon';
+import { RequiredErrorPipe } from '../../../shared/pipes/required-error.pipe';
+import { MaxLengthErrorPipe } from '../../../shared/pipes/max-length-error.pipe';
+import { MinLengthErrorPipe } from '../../../shared/pipes/min-length-error.pipe';
 
 @Component({
   selector: 'app-sign-in',
@@ -25,6 +31,12 @@ import { AppSection } from '../../../shared/models/enums/app-section.enum';
     ReactiveFormsModule,
     MatError,
     RouterLink,
+    MatIconButton,
+    MatIcon,
+    MatSuffix,
+    RequiredErrorPipe,
+    MaxLengthErrorPipe,
+    MinLengthErrorPipe,
   ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
@@ -33,8 +45,10 @@ export class SignInComponent {
   private router = inject(Router);
   private formBuilder = inject(NonNullableFormBuilder);
   private authService = inject(AuthService);
+  private snackBar = inject(SnackBarService);
 
   public pending = signal(false);
+  public hidePassword = signal(true);
 
   public signInForm = this.formBuilder.group({
     email: [
@@ -59,6 +73,7 @@ export class SignInComponent {
       },
       error: () => {
         this.pending.set(false);
+        this.snackBar.error('Invalid email or password');
       },
     });
   }

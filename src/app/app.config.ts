@@ -35,7 +35,6 @@ export const appConfig: ApplicationConfig = {
         duration: 2000,
       },
     },
-
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS,
       useValue: {

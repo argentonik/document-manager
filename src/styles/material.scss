@@ -39,4 +39,9 @@ html {
       background-color: var(--color-primary-95);
     }
   }
+
+  .snackbar-error {
+    --mdc-snackbar-container-color: var(--color-error-100);
+    --mat-snack-bar-button-color: var(--color-primary-100);
+  }
 }

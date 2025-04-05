@@ -6,32 +6,42 @@
     <input matInput formControlName="email">
 
     @if (signInForm.controls.email.errors?.['required']) {
-      <mat-error>Email is required</mat-error>
+      <mat-error>{{ 'Email' | requiredError }}</mat-error>
     }
     @if (signInForm.controls.email.dirty && signInForm.controls.email.errors?.['email']) {
       <mat-error>Invalid email</mat-error>
     }
     @if (signInForm.controls.email.errors?.['maxlength']) {
-      <mat-error>Email must be at most {{ signInForm.controls.email.errors?.['maxlength'].requiredLength }} characters
-        long
+      <mat-error>
+        {{ 'Email' | maxLengthError: signInForm.controls.email }}
       </mat-error>
     }
   </mat-form-field>
   <mat-form-field class="field">
     <mat-label>Password</mat-label>
-    <input matInput formControlName="password" type="password">
+    <input matInput formControlName="password" [type]="hidePassword() ? 'password' : 'text'">
+
+    <button
+      mat-icon-button
+      matSuffix
+      (click)="hidePassword.set(!hidePassword())"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hidePassword()"
+    >
+      <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+    </button>
 
     @if (signInForm.controls.password.errors?.['required']) {
-      <mat-error>Password is required</mat-error>
+      <mat-error>{{ 'Password' | requiredError }}</mat-error>
     }
     @if (signInForm.controls.password.errors?.['minlength']) {
-      <mat-error>Password must be at least {{ signInForm.controls.password.errors?.['minlength'].requiredLength }}
-        characters long
+      <mat-error>
+        {{ 'Password' | minLengthError: signInForm.controls.password }}
       </mat-error>
     }
     @if (signInForm.controls.password.errors?.['maxlength']) {
-      <mat-error>Password must be at most {{ signInForm.controls.password.errors?.['maxlength'].requiredLength }}
-        characters long
+      <mat-error>
+        {{ 'Password' | minLengthError: signInForm.controls.password }}
       </mat-error>
     }
   </mat-form-field>

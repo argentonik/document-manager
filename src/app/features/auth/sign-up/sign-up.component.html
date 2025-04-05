@@ -39,7 +39,17 @@
 
   <mat-form-field class="field">
     <mat-label>Password</mat-label>
-    <input matInput formControlName="password" type="password">
+    <input matInput formControlName="password" [type]="hidePassword() ? 'password' : 'text'">
+
+    <button
+      mat-icon-button
+      matSuffix
+      (click)="hidePassword.set(!hidePassword())"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hidePassword()"
+    >
+      <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+    </button>
 
     @if (signUpForm.controls.password.errors?.['required']) {
       <mat-error>Password is required</mat-error>
