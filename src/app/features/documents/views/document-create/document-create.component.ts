@@ -16,11 +16,11 @@ import { AppSection } from '../../../../shared/models/enums/app-section.enum';
 import { Router } from '@angular/router';
 import { DocumentStatus } from '../../store/document';
 import { MatIcon } from '@angular/material/icon';
+import { RequiredErrorPipe } from '../../../../shared/pipes/required-error.pipe';
+import { MaxLengthErrorPipe } from '../../../../shared/pipes/max-length-error.pipe';
 
 // import and register filepond file type validation plugin
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import { RequiredErrorPipe } from '../../../../shared/pipes/required-error.pipe';
-import { MaxLengthErrorPipe } from '../../../../shared/pipes/max-length-error.pipe';
 
 @Component({
   selector: 'app-document-create',

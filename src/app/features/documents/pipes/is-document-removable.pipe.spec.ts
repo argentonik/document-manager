@@ -5,6 +5,7 @@ import {
   runInInjectionContext,
 } from '@angular/core';
 import { DOCUMENTS_USER_STATUSES } from '../views/documents/documents.providers';
+import { Document, DocumentStatus } from '../store/document';
 
 describe('IsDocumentRemovablePipe', () => {
   let pipe: IsDocumentRemovablePipe;
@@ -15,7 +16,7 @@ describe('IsDocumentRemovablePipe', () => {
         provideExperimentalZonelessChangeDetection(),
         {
           provide: DOCUMENTS_USER_STATUSES,
-          useValue: ['status1', 'status2'],
+          useValue: [DocumentStatus.DRAFT, DocumentStatus.READY_FOR_REVIEW],
         },
       ],
     });
@@ -24,5 +25,15 @@ describe('IsDocumentRemovablePipe', () => {
 
   it('create an instance', () => {
     expect(pipe).toBeTruthy();
+  });
+
+  it('should return true if document status is in DOCUMENT_USER_STATUSES', () => {
+    const document = { status: DocumentStatus.DRAFT } as Document;
+    expect(pipe.transform(document)).toBeTrue();
+  });
+
+  it('should return false if document status is not in DOCUMENT_USER_STATUSES', () => {
+    const document = { status: DocumentStatus.APPROVED } as Document;
+    expect(pipe.transform(document)).toBeFalse();
   });
 });

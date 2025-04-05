@@ -86,7 +86,10 @@ export class DocumentsListComponent implements AfterViewInit {
 
   public ngAfterViewInit() {
     this.sort()?.sortChange.subscribe((sort) => {
-      this.filters.set({ sort: `${sort.active},${sort.direction}` });
+      this.filters.set({
+        ...this.filters(),
+        sort: `${sort.active},${sort.direction}`,
+      });
     });
   }
 

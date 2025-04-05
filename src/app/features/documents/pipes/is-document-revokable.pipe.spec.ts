@@ -5,6 +5,7 @@ import {
   provideExperimentalZonelessChangeDetection,
   runInInjectionContext,
 } from '@angular/core';
+import { Document, DocumentStatus } from '../store/document';
 
 describe('IsDocumentRevokablePipe', () => {
   let pipe: IsDocumentRevokablePipe;
@@ -15,7 +16,7 @@ describe('IsDocumentRevokablePipe', () => {
         provideExperimentalZonelessChangeDetection(),
         {
           provide: DOCUMENTS_CAN_BE_REVOKED_STATUSES,
-          useValue: ['status1', 'status2'],
+          useValue: [DocumentStatus.DRAFT, DocumentStatus.UNDER_REVIEW],
         },
       ],
     });
@@ -24,5 +25,15 @@ describe('IsDocumentRevokablePipe', () => {
 
   it('create an instance', () => {
     expect(pipe).toBeTruthy();
+  });
+
+  it('should return true if document status is in DOCUMENTS_CAN_BE_REVOKED_STATUSES', () => {
+    const document = { status: DocumentStatus.DRAFT } as Document;
+    expect(pipe.transform(document)).toBeTrue();
+  });
+
+  it('should return false if document status is not in DOCUMENTS_CAN_BE_REVOKED_STATUSES', () => {
+    const document = { status: DocumentStatus.APPROVED } as Document;
+    expect(pipe.transform(document)).toBeFalse();
   });
 });

@@ -88,7 +88,7 @@ export class SignUpComponent {
         },
         error: (err) => {
           this.pending.set(false);
-          this.snackBar.error(err.error.message ?? 'Registration failed');
+          this.snackBar.error(err.error?.message ?? 'Registration failed');
         },
       });
   }

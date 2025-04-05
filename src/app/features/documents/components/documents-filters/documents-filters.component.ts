@@ -66,7 +66,6 @@ export class DocumentsFiltersComponent implements OnChanges {
       .pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (filters) => {
-          console.log('filters', filters);
           this.filters.set({
             ...this.filters(),
             ...filters,
