@@ -2,6 +2,8 @@ import {
   AfterViewInit,
   Component,
   computed,
+  DestroyRef,
+  inject,
   input,
   model,
   output,
@@ -24,6 +26,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { DocumentFilters } from '../../models/document-filters.interface';
 import { MatSort, MatSortHeader, SortDirection } from '@angular/material/sort';
 import { DocumentReviewComponent } from '../document-review/document-review.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-documents-list',
@@ -52,6 +55,8 @@ import { DocumentReviewComponent } from '../document-review/document-review.comp
   styleUrl: './documents-list.component.scss',
 })
 export class DocumentsListComponent implements AfterViewInit {
+  private destroyRef = inject(DestroyRef);
+
   public columns = input.required<string[]>();
   public documents = input.required<Document[]>();
   public loading = input<boolean>(false);
@@ -85,12 +90,14 @@ export class DocumentsListComponent implements AfterViewInit {
   });
 
   public ngAfterViewInit() {
-    this.sort()?.sortChange.subscribe((sort) => {
-      this.filters.set({
-        ...this.filters(),
-        sort: `${sort.active},${sort.direction}`,
+    this.sort()
+      ?.sortChange.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((sort) => {
+        this.filters.set({
+          ...this.filters(),
+          sort: `${sort.active},${sort.direction}`,
+        });
       });
-    });
   }
 
   public onPaginate(event: PageEvent) {

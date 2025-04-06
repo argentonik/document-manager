@@ -16,13 +16,17 @@ import { authInterceptor } from './core/auth/interceptors/auth.interceptor';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { unauthorizedInterceptor } from './core/auth/interceptors/unauthorized.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     // No Zone.js
     provideExperimentalZonelessChangeDetection(),
     provideRouter(routes, withComponentInputBinding()),
-    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([authInterceptor, unauthorizedInterceptor]),
+    ),
     provideAnimationsAsync(),
 
     // Config provider

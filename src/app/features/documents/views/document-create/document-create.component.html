@@ -3,7 +3,7 @@
 <mat-card class="card">
   <mat-card-title>Document creation</mat-card-title>
 
-  <form [formGroup]="form" (ngSubmit)="create(true)" class="form">
+  <div [formGroup]="form" class="form">
     <mat-form-field>
       <mat-label>Name</mat-label>
       <input matInput formControlName="name">
@@ -44,5 +44,5 @@
         Send to Review
       </button>
     </mat-card-actions>
-  </form>
+  </div>
 </mat-card>
