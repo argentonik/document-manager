@@ -3,8 +3,8 @@ import { inject } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { switchMap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
-import { DocumentDetailService } from './document-detail.service';
-import { Document } from '../../store/document';
+import { DocumentDetailService } from '../views/document-detail/document-detail.service';
+import { Document } from './document';
 
 const initialState: { document: Document | null; loading: boolean } = {
   document: null,

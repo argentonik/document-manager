@@ -21,4 +21,16 @@ describe('BackButtonComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have a button element', () => {
+    const compiled = fixture.nativeElement;
+    const button = compiled.querySelector('button');
+    expect(button).toBeTruthy();
+  });
+
+  it('should render the back button with correct icon', () => {
+    const compiled = fixture.nativeElement;
+    const icon = compiled.querySelector('mat-icon');
+    expect(icon.textContent).toContain('arrow_back');
+  });
 });

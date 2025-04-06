@@ -16,7 +16,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DocumentsStore } from '../../store/documents.state';
 import { MatButton } from '@angular/material/button';
 import { FilePondModule } from 'ngx-filepond';
-import { DocumentStore } from './document-detail.state';
+import { DocumentStore } from '../../store/document-detail.state';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { Router } from '@angular/router';
 import { AppSection } from '../../../../shared/models/enums/app-section.enum';

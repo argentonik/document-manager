@@ -6,7 +6,7 @@ import {
   provideExperimentalZonelessChangeDetection,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { DocumentStore } from './document-detail.state';
+import { DocumentStore } from '../../store/document-detail.state';
 import { DocumentsStore } from '../../store/documents.state';
 import { CONFIG } from '../../../../core/config/config.provider';
 import { PdfViewerComponent } from '../../components/pdf-viewer/pdf-viewer.component';

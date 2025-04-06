@@ -12,11 +12,11 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { asapScheduler, map, pipe, scheduled, switchMap, tap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
 import { CreateDocumentReq } from '../models/create-document-req.interface';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationModalComponent } from '../../../shared/components/confirmation-modal/confirmation-modal.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DocumentFilters } from '../models/document-filters.interface';
+import { SnackBarService } from '../../../core/services/snack-bar.service';
 
 const initialState = {
   items: <Document[]>[],
@@ -40,12 +40,12 @@ export const DocumentsStore = signalStore(
   withMethods((store) => {
     const service = inject(DocumentsService);
     const dialog = inject(MatDialog);
-    const snackBar = inject(MatSnackBar);
+    const snackBar = inject(SnackBarService);
 
     const errorHandler = (err: HttpErrorResponse) => {
       console.error(err);
       patchState(store, { updating: false, loading: false });
-      snackBar.open(err.error.message?.[0] ?? 'Something went wrong', 'Close');
+      snackBar.error(err.error?.message?.[0] ?? 'Something went wrong');
     };
 
     const getDocumentsMethod = () => {
@@ -96,7 +96,7 @@ export const DocumentsStore = signalStore(
           tapResponse({
             next: () => {
               patchState(store, { updating: false });
-              snackBar.open('Document has been created', 'Close');
+              snackBar.success('Document has been created');
             },
             error: errorHandler,
           }),
@@ -113,7 +113,7 @@ export const DocumentsStore = signalStore(
           tapResponse({
             next: () => {
               patchState(store, { updating: false });
-              snackBar.open(`Document has been updated`, 'Close');
+              snackBar.success(`Document has been updated`);
             },
             error: errorHandler,
           }),
@@ -130,7 +130,7 @@ export const DocumentsStore = signalStore(
           tapResponse({
             next: () => {
               patchState(store, { updating: false });
-              snackBar.open(`Document has been sent to review`, 'Close');
+              snackBar.success(`Document has been sent to review`);
             },
             error: errorHandler,
           }),
@@ -147,7 +147,7 @@ export const DocumentsStore = signalStore(
           tapResponse({
             next: () => {
               patchState(store, { updating: false });
-              snackBar.open(`Document has been revoked`, 'Close');
+              snackBar.success(`Document has been revoked`);
             },
             error: errorHandler,
           }),
@@ -164,7 +164,7 @@ export const DocumentsStore = signalStore(
           tapResponse({
             next: () => {
               patchState(store, { updating: false });
-              snackBar.open(`Document status has been changed`, 'Close');
+              snackBar.success(`Document status has been changed`);
             },
             error: errorHandler,
           }),
@@ -188,7 +188,7 @@ export const DocumentsStore = signalStore(
               tapResponse({
                 next: () => {
                   patchState(store, { updating: false });
-                  snackBar.open(`Document has been deleted`, 'Close');
+                  snackBar.success(`Document has been deleted`);
                 },
                 error: errorHandler,
               }),
@@ -202,7 +202,6 @@ export const DocumentsStore = signalStore(
 
   withHooks({
     onInit({ getDocuments }) {
-      console.log('init store');
       getDocuments();
     },
   }),
